@@ -491,7 +491,7 @@ function TableHeadData()
     };
     obj2={
         key:'课程名称',
-        value:  $('#LessonName').val()
+        value:  $('.dropdown-selected').text()
     };
     obj3={
         key:'任课教师',
