@@ -112,7 +112,7 @@ class AuthController extends Controller
         }
         $cpt_validator = $this->validat_cpt();
 //        dd($cpt_validator);
-        if($cpt_validator != false) {
+        if($cpt_validator == false) {
 
             return Redirect::to('/login')->withErrors('验证码错误，请重试');
         }
