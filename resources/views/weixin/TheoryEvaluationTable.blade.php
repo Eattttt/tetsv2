@@ -459,7 +459,6 @@
     function GetContent(LessonState)
     {
 
-
         var flagC =checkNeceHead_Input(LessonState);//0:成功通过验证，1：提交必填项失败 2：保存必填项失败
 //        2017-01-15暂时取消必填项检查功能
 //正面内容的值
@@ -498,7 +497,7 @@
             value : $('h1:contains("其他")').next().eq(0).val()
         }
         Frontlist.push(obj);
-
+        console.log(Frontlist);
 //如果是待提交状态，将正面未完成标识写入lessonstate，并将其置为可提交状态
         if(LessonState=='待提交')
         {
@@ -513,7 +512,7 @@
         if (flagC == 0)
         {
             var Headlist=TableHeadData();
-//            console.log(Headlist);
+            console.log(Headlist);
 //背面的值
             var Backlist1 =GetBackList1();
             var Backlist2 =GetBackList2();
@@ -543,7 +542,7 @@
             if (frontflag !='')
             {
                 alert(frontflag);
-                window.location.href="/EverEvaluated";
+//                window.location.href="/EverEvaluated";
             }
         }
     }

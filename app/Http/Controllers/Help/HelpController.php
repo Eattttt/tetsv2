@@ -64,12 +64,12 @@ class HelpController extends Controller
         $Semester=$arr[2];
         if ($Semester=='1')
         {
-            $time1 = $year1.'-09';
+            $time1 = $year1.'-08';
             $time2 = $year2.'-03';
         }
         else{
             $time1 = $year2.'-03';
-            $time2 = $year2.'-09';
+            $time2 = $year2.'-08';
         }
         return $data=[
             'time1'=>$time1,
