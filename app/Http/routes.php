@@ -37,7 +37,9 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::group(['middleware' => 'auth'], function () {
 
 
-
+    Route::get('/aaa', function(){
+        return view('particle.Theory');
+    });
 
     //1、学院、组 督导总人数+关注课程数目+关注课程完成数目+已完成听课数目
 
@@ -194,6 +196,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/PracticeEvaluationTableView', 'Auth\HomeController@PracticeEvaluationTableView');//实践评价表视图
     Route::get('/PhysicalEvaluationTableView', 'Auth\HomeController@PhysicalEvaluationTableView');//体育评价表视图
 
+    //评价表正反面内容获取（编辑填充）
+    Route::get('/TheoryEvaluationEdit', 'Auth\HomeController@TheoryEvaluationEdit');//理论评价表正反面内容获取
+    Route::get('/PhysicalEvaluationEdit', 'Auth\HomeController@PhysicalEvaluationEdit');//体育评价表正反面内容获取
+    Route::get('/PracticeEvaluationEdit', 'Auth\HomeController@PracticeEvaluationEdit');//实践评价表正反面内容获取
     //通过web端填写评价表写入数据库
     Route::any('/DBTheoryEvaluationTable', 'EvaluationController@DBTheoryEvaluationTable');//填写理论评价表的内容
     Route::any('/DBPracticeEvaluationTable', 'EvaluationController@DBPracticeEvaluationTable');//管理员填写实践评价表
@@ -212,6 +218,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/EvaluationContent', 'Auth\HomeController@EvaluationContent');//获取正面、背面评价详情
+    Route::get('/EvaluationCheckBox', 'Auth\HomeController@EvaluationCheckBox');//获取正面、背面评价单选和多选的属性
 
     Route::get('/UpdateEvaluation_Migration', 'Auth\HomeController@UpdateEvaluation_Migration');//获取更新信息
     Route::get('/GetFrontValueTable', 'Auth\HomeController@GetFrontValueTable');//正面的评价项

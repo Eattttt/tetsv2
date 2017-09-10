@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HelpController extends Controller
 {
+
     public function GetYearSemester($LessonTime)
     {
         //LessonTime：2016-01-01

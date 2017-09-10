@@ -714,7 +714,14 @@
                             };
                             Frontlist.push(obj);
                         }
-
+                        else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
+                            };
+                            Frontlist.push(obj);
+                        }
                     }
                 }
                 if(cssstyle=="checkboxgrade")
@@ -734,7 +741,14 @@
                             };
                             Frontlist.push(obj);
                         }
-
+                        else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
+                            };
+                            Frontlist.push(obj);
+                        }
                     }
                 }
                 if(cssstyle=="textareagrade")
@@ -835,6 +849,13 @@
                                 value:1
                             };
                             Backlist.push(obj);
+                        }else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
+                            };
+                            Backlist.push(obj);
                         }
 
                     }
@@ -853,6 +874,13 @@
                             {
                                 key:choosecontent,
                                 value:1
+                            };
+                            Backlist.push(obj);
+                        }else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
                             };
                             Backlist.push(obj);
                         }
@@ -889,7 +917,7 @@
         if(flagC==0)
         {
             var frontflag=null;
-            console.log(Frontlist)
+//            console.log(Frontlist);
             var Headlist=TableHeadData();
 //            console.log(Headlist);
             $.ajax({
@@ -935,155 +963,144 @@
         chooseSupervisor();
         var timeoutObj;//用于计时，课程信息请求次数限制
         //课程名称输入框的操作事宜
-        $('#LessonName').bind('input propertychange',function(){
+        $('#LessonName').bind('input propertychange', function () {
             var LessonText = $('#LessonName').val();
-            if( LessonValue.value=='')
-            {
-                TeacherValue.value='';
-                LessonClassValue.value='';
-                LessonRoomValue.value='';
+            if (LessonValue.value == '') {
+                TeacherValue.value = '';
+                LessonClassValue.value = '';
+                LessonRoomValue.value = '';
                 $('#ListenTime').val('');
             }
-            if(timeoutObj)
-            {
+            if (timeoutObj) {
                 clearTimeout(timeoutObj);
             }
-            timeoutObj = setTimeout(function(){
+            timeoutObj = setTimeout(function () {
                 var LessonText = $('#LessonName').val();
                 $.ajax({
                     type: "get",
                     async: false,
-                    url: "/GetLessonArrPra",
-                    data:{dataIn:LessonText},
+                    url: "/GetLessonArrThe",
+                    data: {dataIn: LessonText},
                     success: function (result) {
                         lessondata = result;
-                        var html='';
-                        for (var i=0;i<result.length;i++)
-                        {
-                            html+='<li class="list-group-item" style="font-size: 14px; ' +
+                        var html = '';
+                        for (var i = 0; i < result.length; i++) {
+                            html += '<li class="list-group-item" style="font-size: 14px; ' +
                                     'border-bottom: lightgrey solid 2px">'
-                                    +result[i]['lesson_name']+split_flag
-                                    +result[i]['lesson_teacher_name']+split_flag
-                                    +result[i]['lesson_teacher_id']+split_flag
-                                    +result[i]['lesson_week']+'周'+split_flag+'星期'
-                                    +result[i]['lesson_weekday']+split_flag
-                                    +result[i]['lesson_time'] +split_flag
-                                    +result[i]['lesson_class']+split_flag
-                                    +result[i]['lesson_room']+'</li>';
+                                    + result[i]['lesson_name'] + split_flag
+                                    + result[i]['lesson_teacher_name'] + split_flag
+                                    + result[i]['lesson_teacher_id'] + split_flag
+                                    + result[i]['lesson_week'] + '周' + split_flag + '星期'
+                                    + result[i]['lesson_weekday'] + split_flag
+                                    + result[i]['lesson_time'] + split_flag
+                                    + result[i]['lesson_class'] + split_flag
+                                    + result[i]['lesson_room'] + '</li>';
                         }
                         $('#Lesson_result').html(html);
 
                         $('#Lesson-suggest').show().css({
-                            position:'absolute',
-                            height:'220'
+                            position: 'absolute',
+                            height: '220'
                         });
-                        $('.suggestClass').css('border','1px solid #CCC');
+                        $('.suggestClass').css('border', '1px solid #CCC');
                     }
                 });
-                $(document).bind('click',function(){
+                $(document).bind('click', function () {
                     $('#Lesson-suggest').hide();
                 });
-                $('#Lesson_result').delegate('li','click',function(){
-                    LessonValue.value=$(this).text().split(split_flag)[0];
-                    TeacherValue.value=$(this).text().split(split_flag)[1];
+                $('#Lesson_result').delegate('li', 'click', function () {
+                    LessonValue.value = $(this).text().split(split_flag)[0];
+                    TeacherValue.value = $(this).text().split(split_flag)[1];
                     $('#TeacherID').val($(this).text().split(split_flag)[2]);
-                    LessonWeekday=$(this).text().split(split_flag)[4].match(/\d/g);
-                    LessonClassValue.value=$(this).text().split(split_flag)[6];
-                    LessonRoomValue.value=$(this).text().split(split_flag)[7];
-                    lessonTime =$(this).text().split(split_flag)[5];
-                    $('#LessonTime').attr("disabled",false).val('');
-                    $('#ListenTime').attr("disabled",false).val('');
+                    LessonWeekday = $(this).text().split(split_flag)[4].match(/\d/g);
+                    LessonClassValue.value = $(this).text().split(split_flag)[6];
+                    LessonRoomValue.value = $(this).text().split(split_flag)[7];
+                    lessonTime = $(this).text().split(split_flag)[5];
+                    $('#LessonTime').attr("disabled", false).val('');
+                    $('#ListenTime').attr("disabled", false).val('');
                     //如果上课地点或者上课班级为空，则开放上课班级和上课地点编辑框
-                    if(LessonClassValue.value=='')
-                    {
-                        $('#LessonClass').attr("readonly",false);
-                        $('#LessonClass').attr("disabled",false);
+                    if (LessonClassValue.value == '') {
+                        $('#LessonClass').attr("readonly", false);
+                        $('#LessonClass').attr("disabled", false);
                     }
-                    if(LessonRoomValue.value=='')
-                    {
-                        $('#LessonRoom').attr("disabled",false);
-                        $('#LessonRoom').attr("readonly",false);
+                    if (LessonRoomValue.value == '') {
+                        $('#LessonRoom').attr("disabled", false);
+                        $('#LessonRoom').attr("readonly", false);
                     }
                     /************************************************日历相关函数***************************************************/
                     var date_arr = null;
-                    if (LessonWeekday!=null)
-                    {
-                        date_arr = new Array(0,1,2,3,4,5,6);
-                        date_arr.splice(LessonWeekday,1);
+                    if (LessonWeekday != null) {
+                        date_arr = new Array(0, 1, 2, 3, 4, 5, 6);
+                        date_arr.splice(LessonWeekday, 1);
                     }
                     chooseDate(date_arr);
                 });
-            },400);
-        }).bind('click',function(ev){
-            var oEvent=ev||event;
+            }, 400);
+        }).bind('click', function (ev) {
+            var oEvent = ev || event;
             oEvent.stopPropagation();
             var LessonText = $('#LessonName').val();
-            if(LessonValue.value=='')
-            {
-                TeacherValue.value='';
-                LessonClassValue.value='';
-                LessonRoomValue.value='';
+            if (LessonValue.value == '') {
+                TeacherValue.value = '';
+                LessonClassValue.value = '';
+                LessonRoomValue.value = '';
                 $('#ListenTime').val('');
             }
             $.ajax({
                 type: "get",
                 async: false,
-                url: "/GetLessonArrPra",
-                data:{dataIn:LessonText},
+                url: "/GetLessonArrThe",
+                data: {dataIn: LessonText},
                 success: function (result) {
-                    lessondata=result;
-                    var html='';
-                    for(var i=0;i<result.length;i++)
-                    {
-                        html+='<li class="list-group-item" style="font-size: 14px; ' +
+                    lessondata = result;
+                    var html = '';
+                    for (var i = 0; i < result.length; i++) {
+                        html += '<li class="list-group-item" style="font-size: 14px; ' +
                                 'border-bottom: lightgrey solid 2px">'
-                                +result[i]['lesson_name']+split_flag
-                                +result[i]['lesson_teacher_name']+split_flag
-                                +result[i]['lesson_teacher_id']+split_flag
-                                +result[i]['lesson_week']+'周'+split_flag+'星期'
-                                +result[i]['lesson_weekday']+split_flag
-                                +result[i]['lesson_time'] +split_flag
-                                +result[i]['lesson_class']+split_flag
-                                +result[i]['lesson_room']+'</li>';
+                                + result[i]['lesson_name'] + split_flag
+                                + result[i]['lesson_teacher_name'] + split_flag
+                                + result[i]['lesson_teacher_id'] + split_flag
+                                + result[i]['lesson_week'] + '周' + split_flag + '星期'
+                                + result[i]['lesson_weekday'] + split_flag
+                                + result[i]['lesson_time'] + split_flag
+                                + result[i]['lesson_class'] + split_flag
+                                + result[i]['lesson_room'] + '</li>';
                     }
                     $('#Lesson_result').html(html);
                     $('#Lesson-suggest').show().css({
-                        position:'absolute',
-                        height:'220'
+                        position: 'absolute',
+                        height: '220'
                     });
-                    $('.suggestClass').css('border','1px solid #CCC');
+                    $('.suggestClass').css('border', '1px solid #CCC');
                 }
             });
-            $(document).bind('click',function(){
+            $(document).bind('click', function () {
                 $('#Lesson-suggest').hide();
             });
-            $('#Lesson_result').delegate('li','click',function(){
-                LessonValue.value=$(this).text().split(split_flag)[0];
-                TeacherValue.value=$(this).text().split(split_flag)[1];
+            $('#Lesson_result').delegate('li', 'click', function () {
+                LessonValue.value = $(this).text().split(split_flag)[0];
+                TeacherValue.value = $(this).text().split(split_flag)[1];
                 $('#TeacherID').val($(this).text().split(split_flag)[2]);
-                LessonClassValue.value=$(this).text().split(split_flag)[6];
-                LessonRoomValue.value=$(this).text().split(split_flag)[7];
-                LessonWeekday=$(this).text().split(split_flag)[4].match(/\d/g);
-                lessonTime =$(this).text().split(split_flag)[5];
-                $('#LessonTime').attr("disabled",false).val('');
-                $('#ListenTime').attr("disabled",false).val('');
+                LessonClassValue.value = $(this).text().split(split_flag)[6];
+                LessonRoomValue.value = $(this).text().split(split_flag)[7];
+                LessonWeekday = $(this).text().split(split_flag)[4].match(/\d/g);
+                lessonTime = $(this).text().split(split_flag)[5];
+                $('#LessonTime').attr("disabled", false).val('');
+                $('#ListenTime').attr("disabled", false).val('');
                 //如果上课地点或者上课班级为空，则开放上课班级和上课地点编辑框
-                if(LessonClassValue.value=='')
-                {
-                    $('#LessonClass').attr("readonly",false);
-                    $('#LessonClass').attr("disabled",false);
+                if (LessonClassValue.value == '') {
+                    $('#LessonClass').attr("readonly", false);
+                    $('#LessonClass').attr("disabled", false);
                 }
-                if(LessonRoomValue.value=='')
-                {
-                    $('#LessonRoom').attr("disabled",false);
-                    $('#LessonRoom').attr("readonly",false);
+                if (LessonRoomValue.value == '') {
+                    $('#LessonRoom').attr("disabled", false);
+                    $('#LessonRoom').attr("readonly", false);
                 }
                 /************************************************日历相关函数***************************************************/
                 var date_arr = null;
-                if (LessonWeekday!=null)
-                {
-                    date_arr = new Array(0,1,2,3,4,5,6);
-                    date_arr.splice(LessonWeekday,1);
+                if (LessonWeekday != null) {
+                    date_arr = new Array(0, 1, 2, 3, 4, 5, 6);
+                    date_arr.splice(LessonWeekday, 1);
                 }
                 chooseDate(date_arr);
             });
@@ -1093,40 +1110,253 @@
         //课程节次的坐标
         var LessonTime_X = $('#LessonTime').position().left;
         var LessonTime_Y = $('#LessonTime').position().top;
-        $(window).resize(function (){
+        $(window).resize(function () {
             LessonTime_X = $('#LessonTime').position().left;
             LessonTime_Y = $('#LessonTime').position().top;
         });
-        if($('#LessonName').val()=='')
-            $('#LessonTime').attr("disabled",true);
+        if ($('#LessonName').val() == '')
+            $('#LessonTime').attr("disabled", true);
         else
-            $('#LessonTime').attr("disabled",false);
+            $('#LessonTime').attr("disabled", false);
 
-        if($('#LessonName').val()=='')//课程节次
-            $('#ListenTime').attr("disabled",true);
+        if ($('#LessonName').val() == '')//课程节次
+            $('#ListenTime').attr("disabled", true);
         else
-            $('#ListenTime').attr("disabled",false);
+            $('#ListenTime').attr("disabled", false);
         //如果是从课程表中跳转过来的话，日历函数的操作为
-        if(flag==0)
-        {
-            var date_arr=null;
-            if(LessonWeekday!=null)
-            {
-                date_arr=new Array(0,1,2,3,4,5,6);
-                date_arr.splice(LessonWeekday,1);
+        if (flag == 0) {
+            var date_arr = null;
+            if (LessonWeekday != null) {
+                date_arr = new Array(0, 1, 2, 3, 4, 5, 6);
+                date_arr.splice(LessonWeekday, 1);
             }
             chooseDate(date_arr);
             //如果是从课程表中跳转过来的话，若课程没有提供上课地点，则为
-            if(LessonClassValue.value=='')
-            {
-                $('#LessonClass').attr("readonly",false);
-                $('#LessonClass').attr("disabled",false);
+            if (LessonClassValue.value == '') {
+                $('#LessonClass').attr("readonly", false);
+                $('#LessonClass').attr("disabled", false);
             }
-            if(LessonRoomValue.value=='')
-            {
-                $('#LessonRoom').attr("disabled",false);
-                $('#LessonRoom').attr("readonly",false);
+            if (LessonRoomValue.value == '') {
+                $('#LessonRoom').attr("disabled", false);
+                $('#LessonRoom').attr("readonly", false);
             }
+        }
+        if(flag != 0 && flag != null){
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: "/TheoryEvaluationEdit",
+                data: {
+                    Flag: flag
+                },
+                success: function(result){
+                    //正面评价表信息填写
+                    console.log(result.front);
+                    //3级内容
+                    for (var i=0;i<$('#front ul.grade3').length;i++)
+                    {
+                        var $KeyCheck=$('#front ul.grade3 h3')[i].innerText;
+                        for (var key in result.front["0"])
+                        {
+                            if(key == $KeyCheck)
+                            {
+                                if(result.front["0"][key] == "非常满意")
+                                {
+                                    $($('#front ul.grade3 li.bar1')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "满意")
+                                {
+                                    $($('#front ul.grade3 li.bar2')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "正常")
+                                {
+                                    $($('#front ul.grade3 li.bar3')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "不足")
+                                {
+                                    $($('#front ul.grade3 li.bar4')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "明显不足")
+                                {
+                                    $($('#front ul.grade3 li.bar5')[i]).addClass("current");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    //总体评价
+                    for (var i=0;i<$('#front ul.grade2 h2').length;i++)
+                    {
+                        var $KeyCheck=$('#front ul.grade2 h2')[i].innerText;
+                        if($KeyCheck.indexOf("总体评价")>=0)
+                        {
+//                            console.log($KeyCheck);
+                            for (var key in result.front["0"]) {
+//                                console.log(key);
+                                if (key == $KeyCheck) {
+                                    if (result.front["0"][key] == "非常满意") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar1")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "满意") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar2")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "正常") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar3")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "不足") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar4")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "明显不足") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar5")).addClass("current");
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //radiograde
+                    for (var i=0;i<$('#front .radio').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#front .radio label')[i])["0"].innerText);
+                        for(var key in result.front["0"])
+                        {
+                            if (key == $KeyCheck && result.front["0"][key] == "1")
+                            {
+                                $($($('#front .radio input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //checkboxgrade
+                    for (var i=0;i<$('#front .checkbox').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#front .checkbox label')[i])["0"].innerText);
+                        for(var key in result.front["0"])
+                        {
+                            if (key == $KeyCheck && result.front["0"][key] == "1")
+                            {
+                                $($($('#front .checkbox input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //textareagrade
+                    for (var i=0;i<$('#front .textarea label').length;i++)
+                    {
+                        var $KeyCheck=$($('#front .textarea label')[i])["0"].innerText;
+                        for(var key in result.front["0"])
+                        {
+                            if (key == $KeyCheck)
+                            {
+                                $($($('#front .textarea')[i]).find("input")).val(result.front["0"][key]);
+                            }
+                        }
+                    }
+
+                    //背面评价表信息填写
+                    console.log(result.back);
+                    //3级内容
+                    for (var i=0;i<$('#back ul.grade3').length;i++)
+                    {
+                        var $KeyCheck=$('#back ul.grade3 h3')[i].innerText;
+                        for (var key in result.back["0"])
+                        {
+                            if(key == $KeyCheck)
+                            {
+                                if(result.back["0"][key] == "非常满意")
+                                {
+                                    $($('#back ul.grade3 li.bar1')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "满意")
+                                {
+                                    $($('#back ul.grade3 li.bar2')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "正常")
+                                {
+                                    $($('#back ul.grade3 li.bar3')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "不足")
+                                {
+                                    $($('#back ul.grade3 li.bar4')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "明显不足")
+                                {
+                                    $($('#back ul.grade3 li.bar5')[i]).addClass("current");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    //总体评价
+                    for (var i=0;i<$('#back ul.grade2 h2').length;i++)
+                    {
+                        var $KeyCheck=$('#back ul.grade2 h2')[i].innerText;
+                        if($KeyCheck.indexOf("总体评价")>=0)
+                        {
+//                            console.log($KeyCheck);
+                            for (var key in result.back["0"]) {
+//                                console.log(key);
+                                if (key == $KeyCheck) {
+                                    if (result.back["0"][key] == "非常满意") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar1")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "满意") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar2")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "正常") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar3")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "不足") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar4")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "明显不足") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar5")).addClass("current");
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //radiograde
+                    for (var i=0;i<$('#back .radio').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#back .radio label')[i])["0"].innerText);
+                        for(var key in result.back["0"])
+                        {
+                            if (key == $KeyCheck && result.back["0"][key] == "1")
+                            {
+                                $($($('#back .radio input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //checkboxgrade
+                    for (var i=0;i<$('#back .checkbox').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#back .checkbox label')[i])["0"].innerText);
+                        for(var key in result.back["0"])
+                        {
+                            if (key == $KeyCheck && result.back["0"][key] == "1")
+                            {
+                                $($($('#back .checkbox input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //textareagrade
+                    for (var i=0;i<$('#back .textarea label').length;i++)
+                    {
+                        var $KeyCheck=$($('#back .textarea label')[i])["0"].innerText;
+                        for(var key in result.back["0"])
+                        {
+                            if (key == $KeyCheck)
+                            {
+                                $($($('#back .textarea')[i]).find("input")).val(result.back["0"][key]);
+                            }
+                        }
+                    }
+                }
+            });
         }
         $("#LessonTime").focus(function (){
             $('#LessonTime-suggest').children().remove();
@@ -1144,6 +1374,7 @@
                     AddLessonTime(LessonTime_X,LessonTime_Y,lessonTime);
             }
         });
+
 
         $(function () {
             $("#LessonTime").click(function (event)

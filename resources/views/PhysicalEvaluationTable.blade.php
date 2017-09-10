@@ -709,6 +709,14 @@
                             };
                             Frontlist.push(obj);
                         }
+                        else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
+                            };
+                            Frontlist.push(obj);
+                        }
 
                     }
                 }
@@ -726,6 +734,14 @@
                             {
                                 key:choosecontent,
                                 value:1
+                            };
+                            Frontlist.push(obj);
+                        }
+                        else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
                             };
                             Frontlist.push(obj);
                         }
@@ -830,7 +846,14 @@
                             };
                             Backlist.push(obj);
                         }
-
+                        else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
+                            };
+                            Backlist.push(obj);
+                        }
                     }
                 }
                 if(cssstyle=="checkboxgrade")
@@ -850,7 +873,14 @@
                             };
                             Backlist.push(obj);
                         }
-
+                        else {
+                            obj=
+                            {
+                                key:choosecontent,
+                                value:0
+                            };
+                            Backlist.push(obj);
+                        }
                     }
                 }
                 if(cssstyle=="textareagrade")
@@ -1120,6 +1150,223 @@
                 $('#LessonRoom').attr("disabled",false);
                 $('#LessonRoom').attr("readonly",false);
             }
+        }
+        if(flag != 0 && flag != null){
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: "/PhysicalEvaluationEdit",
+                data: {
+                    Flag: flag
+                },
+                success: function(result){
+                    //正面评价表信息填写
+                    console.log(result.front);
+                    //3级内容
+                    for (var i=0;i<$('#front ul.grade3').length;i++)
+                    {
+                        var $KeyCheck=$('#front ul.grade3 h3')[i].innerText;
+                        for (var key in result.front["0"])
+                        {
+                            if(key == $KeyCheck)
+                            {
+                                if(result.front["0"][key] == "非常满意")
+                                {
+                                    $($('#front ul.grade3 li.bar1')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "满意")
+                                {
+                                    $($('#front ul.grade3 li.bar2')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "正常")
+                                {
+                                    $($('#front ul.grade3 li.bar3')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "不足")
+                                {
+                                    $($('#front ul.grade3 li.bar4')[i]).addClass("current");
+                                }
+                                else if (result.front["0"][key] == "明显不足")
+                                {
+                                    $($('#front ul.grade3 li.bar5')[i]).addClass("current");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    //总体评价
+                    for (var i=0;i<$('#front ul.grade2 h2').length;i++)
+                    {
+                        var $KeyCheck=$('#front ul.grade2 h2')[i].innerText;
+                        if($KeyCheck.indexOf("总体评价")>=0)
+                        {
+//                            console.log($KeyCheck);
+                            for (var key in result.front["0"]) {
+//                                console.log(key);
+                                if (key == $KeyCheck) {
+                                    if (result.front["0"][key] == "非常满意") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar1")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "满意") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar2")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "正常") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar3")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "不足") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar4")).addClass("current");
+                                    }
+                                    else if (result.front["0"][key] == "明显不足") {
+                                        $($($('#front ul.grade2')[i]).find("li.bar5")).addClass("current");
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //radiograde
+                    for (var i=0;i<$('#front .radio').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#front .radio label')[i])["0"].innerText);
+                        for(var key in result.front["0"])
+                        {
+                            if (key == $KeyCheck && result.front["0"][key] == "1")
+                            {
+                                $($($('#front .radio input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //checkboxgrade
+                    for (var i=0;i<$('#front .checkbox').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#front .checkbox label')[i])["0"].innerText);
+                        for(var key in result.front["0"])
+                        {
+                            if (key == $KeyCheck && result.front["0"][key] == "1")
+                            {
+                                $($($('#front .checkbox input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //textareagrade
+                    for (var i=0;i<$('#front .textarea label').length;i++)
+                    {
+                        var $KeyCheck=$($('#front .textarea label')[i])["0"].innerText;
+                        for(var key in result.front["0"])
+                        {
+                            if (key == $KeyCheck)
+                            {
+                                $($($('#front .textarea')[i]).find("input")).val(result.front["0"][key]);
+                            }
+                        }
+                    }
+
+                    //背面评价表信息填写
+                    console.log(result.back);
+                    //3级内容
+                    for (var i=0;i<$('#back ul.grade3').length;i++)
+                    {
+                        var $KeyCheck=$('#back ul.grade3 h3')[i].innerText;
+                        for (var key in result.back["0"])
+                        {
+                            if(key == $KeyCheck)
+                            {
+                                if(result.back["0"][key] == "非常满意")
+                                {
+                                    $($('#back ul.grade3 li.bar1')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "满意")
+                                {
+                                    $($('#back ul.grade3 li.bar2')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "正常")
+                                {
+                                    $($('#back ul.grade3 li.bar3')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "不足")
+                                {
+                                    $($('#back ul.grade3 li.bar4')[i]).addClass("current");
+                                }
+                                else if (result.back["0"][key] == "明显不足")
+                                {
+                                    $($('#back ul.grade3 li.bar5')[i]).addClass("current");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    //总体评价
+                    for (var i=0;i<$('#back ul.grade2 h2').length;i++)
+                    {
+                        var $KeyCheck=$('#back ul.grade2 h2')[i].innerText;
+                        if($KeyCheck.indexOf("总体评价")>=0)
+                        {
+//                            console.log($KeyCheck);
+                            for (var key in result.back["0"]) {
+//                                console.log(key);
+                                if (key == $KeyCheck) {
+                                    if (result.back["0"][key] == "非常满意") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar1")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "满意") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar2")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "正常") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar3")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "不足") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar4")).addClass("current");
+                                    }
+                                    else if (result.back["0"][key] == "明显不足") {
+                                        $($($('#back ul.grade2')[i]).find("li.bar5")).addClass("current");
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //radiograde
+                    for (var i=0;i<$('#back .radio').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#back .radio label')[i])["0"].innerText);
+                        for(var key in result.back["0"])
+                        {
+                            if (key == $KeyCheck && result.back["0"][key] == "1")
+                            {
+                                $($($('#back .radio input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //checkboxgrade
+                    for (var i=0;i<$('#back .checkbox').length;i++)
+                    {
+                        var $KeyCheck=$.trim($($('#back .checkbox label')[i])["0"].innerText);
+                        for(var key in result.back["0"])
+                        {
+                            if (key == $KeyCheck && result.back["0"][key] == "1")
+                            {
+                                $($($('#back .checkbox input')[i])["0"]).prop("checked","true");
+                                break;
+                            }
+                        }
+                    }
+                    //textareagrade
+                    for (var i=0;i<$('#back .textarea label').length;i++)
+                    {
+                        var $KeyCheck=$($('#back .textarea label')[i])["0"].innerText;
+                        for(var key in result.back["0"])
+                        {
+                            if (key == $KeyCheck)
+                            {
+                                $($($('#back .textarea')[i]).find("input")).val(result.back["0"][key]);
+                            }
+                        }
+                    }
+                }
+            });
         }
         $("#LessonTime").focus(function (){
             $('#LessonTime-suggest').children().remove();

@@ -411,7 +411,66 @@ class HomeController extends Controller
             $this->DeepFirstSearchBackPhysicalTable($str,$newresult);
         }
     }
-
+    public function TheoryEvaluationEdit(Request $request)
+    {
+        $mytime=new HelpController;
+        $Time=$mytime->GetYearSemester(date('Y-m'));
+        $TableName=$mytime->GetCurrentTableName($Time['YearSemester']);
+        $FrontName = "front_theory_evaluation".$TableName;
+        $BackName = "back_theory_evaluation".$TableName;
+        $flag = $request->Flag;
+        $tableF = DB::table($FrontName)
+            ->where('valueID','=',$flag)
+            ->get();
+        $tableB = DB::table($BackName)
+            ->where('valueID','=',$flag)
+            ->get();
+        return $result=
+            [
+                'front'=>$tableF,
+                'back'=>$tableB
+            ];
+    }
+    public function PhysicalEvaluationEdit(Request $request)
+    {
+        $mytime=new HelpController;
+        $Time=$mytime->GetYearSemester(date('Y-m'));
+        $TableName=$mytime->GetCurrentTableName($Time['YearSemester']);
+        $FrontName = "front_physical_evaluation".$TableName;
+        $BackName = "back_physical_evaluation".$TableName;
+        $flag = $request->Flag;
+        $tableF = DB::table($FrontName)
+            ->where('valueID','=',$flag)
+            ->get();
+        $tableB = DB::table($BackName)
+            ->where('valueID','=',$flag)
+            ->get();
+        return $result=
+            [
+                'front'=>$tableF,
+                'back'=>$tableB
+            ];
+    }
+    public function PracticeEvaluationEdit(Request $request)
+    {
+        $mytime=new HelpController;
+        $Time=$mytime->GetYearSemester(date('Y-m'));
+        $TableName=$mytime->GetCurrentTableName($Time['YearSemester']);
+        $FrontName = "front_practice_evaluation".$TableName;
+        $BackName = "back_practice_evaluation".$TableName;
+        $flag = $request->Flag;
+        $tableF = DB::table($FrontName)
+            ->where('valueID','=',$flag)
+            ->get();
+        $tableB = DB::table($BackName)
+            ->where('valueID','=',$flag)
+            ->get();
+        return $result=
+            [
+                'front'=>$tableF,
+                'back'=>$tableB
+            ];
+    }
     public function CreateFrontTheoryEvalTable(Request $request)
     {
         //更新表evaluation_migration
@@ -822,6 +881,36 @@ class HomeController extends Controller
             '2'=>$backContent,
             '3'=>$tableF,
             '4'=>$tableB
+        ];
+
+    }
+    public function EvaluationCheckBox(Request $request)
+    {
+        $version = new HelpController;
+        $year1 = $request->year1;
+        $year2 = $request->year2;
+        $semester = $request->semester;
+        if ($semester==null && $year1==null && $year2==null )
+        {
+            $Lesson_date = $request->Lesson_date;
+            $Flag = $version->GetYearSemester($Lesson_date);//将听课时间2016-08-10与学年学期对应
+            $TableFlag = $Flag['YearSemester'];
+        }
+        else
+        {
+            $year = $year1."-".$year2;
+            $TableFlag = $year."-".$semester[0];//使用表版本的标识
+        }
+        $tableName = $version->GetCurrentTableName($TableFlag);
+        $FrontName = "front_contents".$tableName;
+//        $BackName = "back_contents".$tableName;
+        $front = DB::select('select text from '.$FrontName.' where level = \'2\' and cssstyle = 2');
+//        Log::info($front);
+//        $back = DB::select('select DISTINCT text from '.$BackName.' where level = \'2\' and (cssstyle = 4 or cssstyle = 1)');
+//        Log::info($back);
+        return $result =[
+            'front' => $front,
+//            'back' => $back
         ];
     }
     public function getTree($result, $parent_id = 0, $level = 0)

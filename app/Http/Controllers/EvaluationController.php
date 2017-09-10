@@ -1376,7 +1376,6 @@ class EvaluationController extends Controller
          * 10:授课教师ID
          * */
         $version=$YearSemester->GetYearSemester($headdata[5]['value']);
-        log::info($version);
         $TableNamePostfix=DB::table('evaluation_migration')
             ->select('Table_Name')
             ->where('Create_Year','=',$version['YearSemester'])
@@ -1413,7 +1412,6 @@ class EvaluationController extends Controller
                     ]);
             }
             //该课程为已评价，说明别的督导已经提交评价，则不修改lesson表
-
         }
         if ($lesson_state=='已完成')//相当于填完评价表直接提交
         {
@@ -1445,8 +1443,8 @@ class EvaluationController extends Controller
                     ->where($headdata[3]['key'],'=',$headdata[3]['value'])
                     ->where($headdata[5]['key'],'=',$headdata[5]['value'])
                     ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-//                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//数据库中未加第 节 时
-                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//
+                    ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
                     ->get();
                 if ($SubmitF!=null)
                 {
@@ -1456,7 +1454,62 @@ class EvaluationController extends Controller
                     }
                     if ($SubmitF[0]->评价状态 == '待提交'|| $SubmitF[0]->评价状态 == '待提交1')//说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     {
-                        return '您已保存过该时间段内的评论表！';
+                        DB::table($TableName1)
+                            ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                            ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                            ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                            ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                            ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                            ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                            ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                            ->update(
+                                [$headdata[0]['key'] => $headdata[0]['value']],
+                                [$headdata[4]['key'] => $headdata[4]['value']],
+                                [$headdata[6]['key'] => $headdata[6]['value']],
+                                [$headdata[7]['key'] => $headdata[7]['value']]
+                            );
+                        DB::table($TableName2)
+                            ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                            ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                            ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                            ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                            ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                            ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                            ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                            ->update(
+                                [$headdata[0]['key'] => $headdata[0]['value']],
+                                [$headdata[4]['key'] => $headdata[4]['value']],
+                                [$headdata[6]['key'] => $headdata[6]['value']],
+                                [$headdata[7]['key'] => $headdata[7]['value']]
+                            );
+                        for ($i=0;$i<count($frontdata);$i++)
+                        {
+                            DB::table($TableName1)
+                                ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                                ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                                ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                                ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                                ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                                ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                                ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                                ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
+                        }
+
+                        for($i=0;$i<count($backdata);$i++)
+                        {
+//                Log::info("yesyes");
+                            DB::table($TableName2)
+                                ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                                ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                                ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                                ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                                ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                                ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                                ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                                ->update([$backdata[$i]['key']=> $backdata[$i]['value']]);
+                        }
+                        return '已保存更新该评论表数据！';
+//                        return '您已保存过该时间段内的评论表！';
                     }
                 }
 
@@ -1594,28 +1647,18 @@ class EvaluationController extends Controller
         else{//想要修改评价表
             //说明该课程在该课程节次已经在理论评价表中被该老师评价过了，
             //此时valueID 不可能为 0 或者null
-//            Log::write('info',$valueID);
             //查询评价表中是否有该课程的记录：防止督导通过
-//        1、添加新的评价表，来覆盖之前提交的
-//        2、修改待提交的，覆盖之前已经提交的。
-//        检测标准：1、同一老师，同一门课程，同一组班级，同一时间(听课日期+听课节次)，
+//        1、更新之前保存的。
+//        2、更新数据并提交。
+//        检测标准：valueID，
             $SubmitF = null;
-
-
             for ($m=0;$m<count($headdata[9]['value1']);$m++)
             {
-                $SubmitF = DB::table($TableName1)->select('评价状态','valueID')
-                    ->where($headdata[1]['key'],'=',$headdata[1]['value'])
-                    ->where($headdata[2]['key'],'=',$headdata[2]['value'])
-                    ->where($headdata[3]['key'],'=',$headdata[3]['value'])
-                    ->where($headdata[5]['key'],'=',$headdata[5]['value'])
-                    ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                $SubmitF = $tableF = DB::table($TableName1)
+                    ->where('valueID','=',$valueID)
                     ->get();
-
                 if ($SubmitF!=null)
                 {
-
                     //说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     if ($SubmitF[0]->评价状态 == '已完成' )
                     {
@@ -1623,108 +1666,54 @@ class EvaluationController extends Controller
                     }
                     if ($SubmitF[0]->评价状态 == '待提交'|| $SubmitF[0]->评价状态 == '待提交1')//说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     {
-//                   当有valueID时，同样在
-                        if($SubmitF[0]->valueID == $valueID)
                             break;//此时就是该评价表本身修改
-                        else
-                            return '您已保存过该时间段内的评论表！';
                     }
                 }
-
-
-
             }
-
-            $F = DB::table($TableName1)
+            DB::table($TableName1)
                 ->where('valueID','=',$valueID)
-                ->get();
-//Log::write('info',$F);
-            if($F[0]->评价状态 == '已完成')
+                ->update(
+                    [$headdata[0]['key'] => $headdata[0]['value']],
+                    [$headdata[4]['key'] => $headdata[4]['value']],
+                    [$headdata[6]['key'] => $headdata[6]['value']],
+                    [$headdata[7]['key'] => $headdata[7]['value']]
+                );
+            DB::table($TableName1)
+                ->where('valueID','=',$valueID)
+                ->update(
+                        ['评价状态' => $lesson_state]
+                );
+            DB::table($TableName2)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    ['评价状态' => $lesson_state]
+                );
+            DB::table($TableName2)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    [$headdata[0]['key'] => $headdata[0]['value']],
+                    [$headdata[4]['key'] => $headdata[4]['value']],
+                    [$headdata[6]['key'] => $headdata[6]['value']],
+                    [$headdata[7]['key'] => $headdata[7]['value']]
+                );
+            for ($i=0;$i<count($frontdata);$i++)
             {
-                return '您已提交该课程评价，请勿重复提交。';
-            }
-            //此时的状态为可提交可保存
-            if($F[0]->评价状态 == '待提交' || $F[0]->评价状态 == '待提交1')
-            {
-//头部更新
-//                DB::table($TableName1)
-//                    ->where('valueID','=',$valueID)
-//                    ->update([
-//                        '评价状态'=>$lesson_state
-//                    ]);
-
-                //更新评价表正面头部
                 DB::table($TableName1)
                     ->where('valueID','=',$valueID)
-                    ->delete();
-                $flag0 = DB::table($TableName1)
-                    ->insert(
-                        [
-                            'valueID'=>$valueID,
-                            $headdata[0]['key']=> $headdata[0]['value'],//章节目录
-                            $headdata[1]['key']=> $headdata[1]['value'],//课程名称
-                            $headdata[2]['key']=> $headdata[2]['value'],//任课教师
-                            $headdata[3]['key']=> $headdata[3]['value'],//上课班级
-                            $headdata[4]['key']=> $headdata[4]['value'],//上课地点
-                            $headdata[5]['key']=> $headdata[5]['value'],//听课时间
-                            $headdata[6]['key']=> $headdata[6]['value'],//督导姓名
-                            $headdata[7]['key']=> $headdata[7]['value'],//课程属性
-                            $headdata[8]['key']=> $headdata[8]['value'],//督导id
-                            $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-                            $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
-                            '评价状态'=>$lesson_state,
-                            '填表时间'=>date("Y-m-d")
-                        ]
-                    );
-//                for($i=0;$i<count($headdata);$i++)
-//                {
-//                    DB::table($TableName1)
-//                        ->where('valueID','=',$valueID)
-//                        ->update([$headdata[$i]['key']=> $headdata[$i]['value']]);
-//                }
-
-                //评价表正面内容更新
-                for ($i=0;$i<count($frontdata);$i++)
-                {
-                    DB::table($TableName1)
-                        ->where('valueID','=',$valueID)
-                        ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
-                }
-
-                //评价表背面内容更新
+                    ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
+            }
+            for($i=0;$i<count($backdata);$i++)
+            {
+//                Log::info("yesyes");
                 DB::table($TableName2)
                     ->where('valueID','=',$valueID)
-                    ->delete();
-                //将表背面数据项制空
-                $flag1 = DB::table($TableName2)
-                    ->insert(
-                        [
-                            'valueID'=>$valueID,
-                            $headdata[0]['key']=> $headdata[0]['value'],//章节目录
-                            $headdata[1]['key']=> $headdata[1]['value'],//课程名称
-                            $headdata[2]['key']=> $headdata[2]['value'],//任课教师
-                            $headdata[3]['key']=> $headdata[3]['value'],//上课班级
-                            $headdata[4]['key']=> $headdata[4]['value'],//上课地点
-                            $headdata[5]['key']=> $headdata[5]['value'],//听课时间
-                            $headdata[6]['key']=> $headdata[6]['value'],//督导姓名
-                            $headdata[7]['key']=> $headdata[7]['value'],//课程属性
-                            $headdata[8]['key']=> $headdata[8]['value'],//督导id
-                            $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-                            $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
-                            '评价状态'=>$lesson_state,
-                            '填表时间'=>date("Y-m-d")
-                        ]
-                    );
-
-
-                if ($lesson_state == '已完成')
-                    return '提交成功';
-                else
-                    return '保存成功';
+                    ->update([$backdata[$i]['key']=> $backdata[$i]['value']]);
             }
-
+            if ($lesson_state == '已完成')
+                return '提交成功';
+            else
+                return '保存成功';
         }
-        return '未知错误，请联系开发人员';
     }
 
     public function DBPracticeEvaluationTable(Request $request)
@@ -1811,8 +1800,8 @@ class EvaluationController extends Controller
                     ->where($headdata[3]['key'],'=',$headdata[3]['value'])
                     ->where($headdata[5]['key'],'=',$headdata[5]['value'])
                     ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-//                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//数据库中未加第 节 时
-                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//
+                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                    ->where($headdata[10]['key'],'=',$headdata[10]['value'])
                     ->get();
                 if ($SubmitF!=null)
                 {
@@ -1822,7 +1811,61 @@ class EvaluationController extends Controller
                     }
                     if ($SubmitF[0]->评价状态 == '待提交'|| $SubmitF[0]->评价状态 == '待提交1')//说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     {
-                        return '您已保存过该时间段内的评论表！';
+                        DB::table($TableName1)
+                            ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                            ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                            ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                            ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                            ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                            ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                            ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                            ->update(
+                                [$headdata[0]['key'] => $headdata[0]['value']],
+                                [$headdata[4]['key'] => $headdata[4]['value']],
+                                [$headdata[6]['key'] => $headdata[6]['value']],
+                                [$headdata[7]['key'] => $headdata[7]['value']]
+                            );
+                        DB::table($TableName2)
+                            ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                            ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                            ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                            ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                            ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                            ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                            ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                            ->update(
+                                [$headdata[0]['key'] => $headdata[0]['value']],
+                                [$headdata[4]['key'] => $headdata[4]['value']],
+                                [$headdata[6]['key'] => $headdata[6]['value']],
+                                [$headdata[7]['key'] => $headdata[7]['value']]
+                            );
+                        for ($i=0;$i<count($frontdata);$i++)
+                        {
+                            DB::table($TableName1)
+                                ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                                ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                                ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                                ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                                ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                                ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                                ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                                ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
+                        }
+
+                        for($i=0;$i<count($backdata);$i++)
+                        {
+//                Log::info("yesyes");
+                            DB::table($TableName2)
+                                ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                                ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                                ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                                ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                                ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                                ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                                ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                                ->update([$backdata[$i]['key']=> $backdata[$i]['value']]);
+                        }
+                        return '已保存更新该评论表数据！';
                     }
                 }
 
@@ -1881,7 +1924,7 @@ class EvaluationController extends Controller
                         $headdata[7]['key']=> $headdata[7]['value'],//课程属性
                         $headdata[8]['key']=> $headdata[8]['value'],//督导id
                         $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-                        $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
+                        $headdata[10]['key']=> $headdata[10]['value'],//教师ID
                         '评价状态'=>$lesson_state,
                         '填表时间'=>date("Y-m-d")
                     ]
@@ -1921,7 +1964,7 @@ class EvaluationController extends Controller
                         $headdata[7]['key']=> $headdata[7]['value'],//课程属性
                         $headdata[8]['key']=> $headdata[8]['value'],//课程属性
                         $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-                        $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
+                        $headdata[10]['key']=> $headdata[10]['value'],//教师ID
                         '评价状态'=>$lesson_state,
                         '填表时间'=>date("Y-m-d")
                     ]
@@ -1957,31 +2000,15 @@ class EvaluationController extends Controller
                 return '保存成功';
 //            }
         }
-        else{//想要修改评价表
-            //说明该课程在该课程节次已经在理论评价表中被该老师评价过了，
-            //此时valueID 不可能为 0 或者null
-//            Log::write('info',$valueID);
-            //查询评价表中是否有该课程的记录：防止督导通过
-//        1、添加新的评价表，来覆盖之前提交的
-//        2、修改待提交的，覆盖之前已经提交的。
-//        检测标准：1、同一老师，同一门课程，同一组班级，同一时间(听课日期+听课节次)，
+        else{
             $SubmitF = null;
-
-
             for ($m=0;$m<count($headdata[9]['value1']);$m++)
             {
-                $SubmitF = DB::table($TableName1)->select('评价状态','valueID')
-                    ->where($headdata[1]['key'],'=',$headdata[1]['value'])
-                    ->where($headdata[2]['key'],'=',$headdata[2]['value'])
-                    ->where($headdata[3]['key'],'=',$headdata[3]['value'])
-                    ->where($headdata[5]['key'],'=',$headdata[5]['value'])
-                    ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                $SubmitF = $tableF = DB::table($TableName1)
+                    ->where('valueID','=',$valueID)
                     ->get();
-
                 if ($SubmitF!=null)
                 {
-
                     //说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     if ($SubmitF[0]->评价状态 == '已完成' )
                     {
@@ -1989,108 +2016,53 @@ class EvaluationController extends Controller
                     }
                     if ($SubmitF[0]->评价状态 == '待提交'|| $SubmitF[0]->评价状态 == '待提交1')//说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     {
-//                   当有valueID时，同样在
-                        if($SubmitF[0]->valueID == $valueID)
-                            break;//此时就是该评价表本身修改
-                        else
-                            return '您已保存过该时间段内的评论表！';
+                        break;//此时就是该评价表本身修改
                     }
                 }
-
-
-
             }
-
-            $F = DB::table($TableName1)
+            DB::table($TableName1)
                 ->where('valueID','=',$valueID)
-                ->get();
-//Log::write('info',$F);
-            if($F[0]->评价状态 == '已完成')
+                ->update(
+                    [$headdata[0]['key'] => $headdata[0]['value']],
+                    [$headdata[4]['key'] => $headdata[4]['value']],
+                    [$headdata[6]['key'] => $headdata[6]['value']],
+                    [$headdata[7]['key'] => $headdata[7]['value']]
+                );
+            DB::table($TableName1)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    ['评价状态' => $lesson_state]
+                );
+            DB::table($TableName2)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    ['评价状态' => $lesson_state]
+                );
+            DB::table($TableName2)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    [$headdata[0]['key'] => $headdata[0]['value']],
+                    [$headdata[4]['key'] => $headdata[4]['value']],
+                    [$headdata[6]['key'] => $headdata[6]['value']],
+                    [$headdata[7]['key'] => $headdata[7]['value']]
+                );
+            for ($i=0;$i<count($frontdata);$i++)
             {
-                return '您已提交该课程评价，请勿重复提交。';
-            }
-            //此时的状态为可提交可保存
-            if($F[0]->评价状态 == '待提交' || $F[0]->评价状态 == '待提交1')
-            {
-//头部更新
-//                DB::table($TableName1)
-//                    ->where('valueID','=',$valueID)
-//                    ->update([
-//                        '评价状态'=>$lesson_state
-//                    ]);
-
-                //更新评价表正面头部
                 DB::table($TableName1)
                     ->where('valueID','=',$valueID)
-                    ->delete();
-                $flag0 = DB::table($TableName1)
-                    ->insert(
-                        [
-                            'valueID'=>$valueID,
-                            $headdata[0]['key']=> $headdata[0]['value'],//章节目录
-                            $headdata[1]['key']=> $headdata[1]['value'],//课程名称
-                            $headdata[2]['key']=> $headdata[2]['value'],//任课教师
-                            $headdata[3]['key']=> $headdata[3]['value'],//上课班级
-                            $headdata[4]['key']=> $headdata[4]['value'],//上课地点
-                            $headdata[5]['key']=> $headdata[5]['value'],//听课时间
-                            $headdata[6]['key']=> $headdata[6]['value'],//督导姓名
-                            $headdata[7]['key']=> $headdata[7]['value'],//课程属性
-                            $headdata[8]['key']=> $headdata[8]['value'],//督导id
-                            $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-                            $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
-                            '评价状态'=>$lesson_state,
-                            '填表时间'=>date("Y-m-d")
-                        ]
-                    );
-//                for($i=0;$i<count($headdata);$i++)
-//                {
-//                    DB::table($TableName1)
-//                        ->where('valueID','=',$valueID)
-//                        ->update([$headdata[$i]['key']=> $headdata[$i]['value']]);
-//                }
-
-                //评价表正面内容更新
-                for ($i=0;$i<count($frontdata);$i++)
-                {
-                    DB::table($TableName1)
-                        ->where('valueID','=',$valueID)
-                        ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
-                }
-
-                //评价表背面内容更新
+                    ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
+            }
+            for($i=0;$i<count($backdata);$i++)
+            {
                 DB::table($TableName2)
                     ->where('valueID','=',$valueID)
-                    ->delete();
-                //将表背面数据项制空
-                $flag1 = DB::table($TableName2)
-                    ->insert(
-                        [
-                            'valueID'=>$valueID,
-                            $headdata[0]['key']=> $headdata[0]['value'],//章节目录
-                            $headdata[1]['key']=> $headdata[1]['value'],//课程名称
-                            $headdata[2]['key']=> $headdata[2]['value'],//任课教师
-                            $headdata[3]['key']=> $headdata[3]['value'],//上课班级
-                            $headdata[4]['key']=> $headdata[4]['value'],//上课地点
-                            $headdata[5]['key']=> $headdata[5]['value'],//听课时间
-                            $headdata[6]['key']=> $headdata[6]['value'],//督导姓名
-                            $headdata[7]['key']=> $headdata[7]['value'],//课程属性
-                            $headdata[8]['key']=> $headdata[8]['value'],//督导id
-                            $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-                            $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
-                            '评价状态'=>$lesson_state,
-                            '填表时间'=>date("Y-m-d")
-                        ]
-                    );
-
-
-                if ($lesson_state == '已完成')
-                    return '提交成功';
-                else
-                    return '保存成功';
+                    ->update([$backdata[$i]['key']=> $backdata[$i]['value']]);
             }
-
+            if ($lesson_state == '已完成')
+                return '提交成功';
+            else
+                return '保存成功';
         }
-        return '未知错误，请联系开发人员';
     }
     public function DBPhysicalEvaluationTable(Request $request)
     {
@@ -2104,7 +2076,7 @@ class EvaluationController extends Controller
          * $headdata：
          * 0：章节目录 1：课程名称 2：任课教师 3：上课班级: 4：上课地点
          * 5：听课时间 6：督导姓名 7：课程属性 8：督导id 9：听课节次     ->value1,将听课节次拆开后的结果
-         * 10：授课教师ID
+         * 10：教师ID
          * */
         $version=$YearSemester->GetYearSemester($headdata[5]['value']);
         $TableNamePostfix=DB::table('evaluation_migration')
@@ -2175,8 +2147,8 @@ class EvaluationController extends Controller
                     ->where($headdata[3]['key'],'=',$headdata[3]['value'])
                     ->where($headdata[5]['key'],'=',$headdata[5]['value'])
                     ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-//                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//数据库中未加第 节 时
                     ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//
+                    ->where($headdata[10]['key'],'=',$headdata[10]['value'])
                     ->get();
                 if ($SubmitF!=null)
                 {
@@ -2186,7 +2158,61 @@ class EvaluationController extends Controller
                     }
                     if ($SubmitF[0]->评价状态 == '待提交'|| $SubmitF[0]->评价状态 == '待提交1')//说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     {
-                        return '您已保存过该时间段内的评论表！';
+                        DB::table($TableName1)
+                            ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                            ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                            ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                            ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                            ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                            ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                            ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                            ->update(
+                                [$headdata[0]['key'] => $headdata[0]['value']],
+                                [$headdata[4]['key'] => $headdata[4]['value']],
+                                [$headdata[6]['key'] => $headdata[6]['value']],
+                                [$headdata[7]['key'] => $headdata[7]['value']]
+                            );
+                        DB::table($TableName2)
+                            ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                            ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                            ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                            ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                            ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                            ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                            ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                            ->update(
+                                [$headdata[0]['key'] => $headdata[0]['value']],
+                                [$headdata[4]['key'] => $headdata[4]['value']],
+                                [$headdata[6]['key'] => $headdata[6]['value']],
+                                [$headdata[7]['key'] => $headdata[7]['value']]
+                            );
+                        for ($i=0;$i<count($frontdata);$i++)
+                        {
+                            DB::table($TableName1)
+                                ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                                ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                                ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                                ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                                ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                                ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                                ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                                ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
+                        }
+
+                        for($i=0;$i<count($backdata);$i++)
+                        {
+//                Log::info("yesyes");
+                            DB::table($TableName2)
+                                ->where($headdata[1]['key'],'=',$headdata[1]['value'])
+                                ->where($headdata[2]['key'],'=',$headdata[2]['value'])
+                                ->where($headdata[3]['key'],'=',$headdata[3]['value'])
+                                ->where($headdata[5]['key'],'=',$headdata[5]['value'])
+                                ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                                ->where($headdata[10]['key'],'=',$headdata[10]['value'])
+                                ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                                ->update([$backdata[$i]['key']=> $backdata[$i]['value']]);
+                        }
+                        return '已保存更新该评论表数据！';
                     }
                 }
 
@@ -2196,7 +2222,6 @@ class EvaluationController extends Controller
                     ->where($headdata[3]['key'],'=',$headdata[3]['value'])
                     ->where($headdata[5]['key'],'=',$headdata[5]['value'])
                     ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-//                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//数据库中未加第 节 时
                     ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')//
                     ->get();
                 if ($SubmitF3!=null)
@@ -2245,7 +2270,7 @@ class EvaluationController extends Controller
                         $headdata[7]['key']=> $headdata[7]['value'],//课程属性
                         $headdata[8]['key']=> $headdata[8]['value'],//督导id
                         $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-//                        $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
+                        $headdata[10]['key']=> $headdata[10]['value'],//教师ID
                         '评价状态'=>$lesson_state,
                         '填表时间'=>date("Y-m-d")
                     ]
@@ -2265,6 +2290,7 @@ class EvaluationController extends Controller
                     ->where($headdata[6]['key'],'=',$headdata[6]['value'])
                     ->where($headdata[7]['key'],'=',$headdata[7]['value'])
                     ->where($headdata[8]['key'],'=',$headdata[8]['value'])
+                    ->where($headdata[10]['key'],'=',$headdata[10]['value'])
                     ->where($headdata[9]['key'],'like','%'.$headdata[9]['value'].'%')//
 //                        ->where($headdata[9]['key'],'=',$headdata[9]['value'])//听课节次未加第几节
                     ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
@@ -2285,7 +2311,7 @@ class EvaluationController extends Controller
                         $headdata[7]['key']=> $headdata[7]['value'],//课程属性
                         $headdata[8]['key']=> $headdata[8]['value'],//课程属性
                         $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-//                        $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
+                        $headdata[10]['key']=> $headdata[10]['value'],//教师ID
                         '评价状态'=>$lesson_state,
                         '填表时间'=>date("Y-m-d")
                     ]
@@ -2304,8 +2330,8 @@ class EvaluationController extends Controller
                     ->where($headdata[6]['key'],'=',$headdata[6]['value'])
                     ->where($headdata[7]['key'],'=',$headdata[7]['value'])
                     ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value'].'%')//
-//                        ->where($headdata[9]['key'],'=',$headdata[9]['value'])//听课节次未加第几节
+                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value'].'%')
+                    ->where($headdata[10]['key'],'=',$headdata[10]['value'])
                     ->update([$backdata[$i]['key']=> $backdata[$i]['value']]);
             }
 
@@ -2324,28 +2350,18 @@ class EvaluationController extends Controller
         else{//想要修改评价表
             //说明该课程在该课程节次已经在理论评价表中被该老师评价过了，
             //此时valueID 不可能为 0 或者null
-//            Log::write('info',$valueID);
             //查询评价表中是否有该课程的记录：防止督导通过
 //        1、添加新的评价表，来覆盖之前提交的
 //        2、修改待提交的，覆盖之前已经提交的。
-//        检测标准：1、同一老师，同一门课程，同一组班级，同一时间(听课日期+听课节次)，
+//        检测标准：valueID，
             $SubmitF = null;
-
-
             for ($m=0;$m<count($headdata[9]['value1']);$m++)
             {
-                $SubmitF = DB::table($TableName1)->select('评价状态','valueID')
-                    ->where($headdata[1]['key'],'=',$headdata[1]['value'])
-                    ->where($headdata[2]['key'],'=',$headdata[2]['value'])
-                    ->where($headdata[3]['key'],'=',$headdata[3]['value'])
-                    ->where($headdata[5]['key'],'=',$headdata[5]['value'])
-                    ->where($headdata[8]['key'],'=',$headdata[8]['value'])
-                    ->where($headdata[9]['key'],'like','%'.$headdata[9]['value1'][$m].'%')
+                $SubmitF = $tableF = DB::table($TableName1)
+                    ->where('valueID','=',$valueID)
                     ->get();
-
                 if ($SubmitF!=null)
                 {
-
                     //说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     if ($SubmitF[0]->评价状态 == '已完成' )
                     {
@@ -2353,108 +2369,55 @@ class EvaluationController extends Controller
                     }
                     if ($SubmitF[0]->评价状态 == '待提交'|| $SubmitF[0]->评价状态 == '待提交1')//说明该课程在该课程节次已经在理论评价表中被该老师评价过了，此时valueID 不可能为 0 或者null
                     {
-//                   当有valueID时，同样在
-                        if($SubmitF[0]->valueID == $valueID)
-                            break;//此时就是该评价表本身修改
-                        else
-                            return '您已保存过该时间段内的评论表！';
+                        break;//此时就是该评价表本身修改
                     }
                 }
-
-
-
             }
-
-            $F = DB::table($TableName1)
+            DB::table($TableName1)
                 ->where('valueID','=',$valueID)
-                ->get();
-//Log::write('info',$F);
-            if($F[0]->评价状态 == '已完成')
+                ->update(
+                    [$headdata[0]['key'] => $headdata[0]['value']],
+                    [$headdata[4]['key'] => $headdata[4]['value']],
+                    [$headdata[6]['key'] => $headdata[6]['value']],
+                    [$headdata[7]['key'] => $headdata[7]['value']]
+                );
+            DB::table($TableName1)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    ['评价状态' => $lesson_state]
+                );
+            DB::table($TableName2)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    ['评价状态' => $lesson_state]
+                );
+            DB::table($TableName2)
+                ->where('valueID','=',$valueID)
+                ->update(
+                    [$headdata[0]['key'] => $headdata[0]['value']],
+                    [$headdata[4]['key'] => $headdata[4]['value']],
+                    [$headdata[6]['key'] => $headdata[6]['value']],
+                    [$headdata[7]['key'] => $headdata[7]['value']]
+                );
+            for ($i=0;$i<count($frontdata);$i++)
             {
-                return '您已提交该课程评价，请勿重复提交。';
-            }
-            //此时的状态为可提交可保存
-            if($F[0]->评价状态 == '待提交' || $F[0]->评价状态 == '待提交1')
-            {
-//头部更新
-//                DB::table($TableName1)
-//                    ->where('valueID','=',$valueID)
-//                    ->update([
-//                        '评价状态'=>$lesson_state
-//                    ]);
-
-                //更新评价表正面头部
                 DB::table($TableName1)
                     ->where('valueID','=',$valueID)
-                    ->delete();
-                $flag0 = DB::table($TableName1)
-                    ->insert(
-                        [
-                            'valueID'=>$valueID,
-                            $headdata[0]['key']=> $headdata[0]['value'],//章节目录
-                            $headdata[1]['key']=> $headdata[1]['value'],//课程名称
-                            $headdata[2]['key']=> $headdata[2]['value'],//任课教师
-                            $headdata[3]['key']=> $headdata[3]['value'],//上课班级
-                            $headdata[4]['key']=> $headdata[4]['value'],//上课地点
-                            $headdata[5]['key']=> $headdata[5]['value'],//听课时间
-                            $headdata[6]['key']=> $headdata[6]['value'],//督导姓名
-                            $headdata[7]['key']=> $headdata[7]['value'],//课程属性
-                            $headdata[8]['key']=> $headdata[8]['value'],//督导id
-                            $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-//                            $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
-                            '评价状态'=>$lesson_state,
-                            '填表时间'=>date("Y-m-d")
-                        ]
-                    );
-//                for($i=0;$i<count($headdata);$i++)
-//                {
-//                    DB::table($TableName1)
-//                        ->where('valueID','=',$valueID)
-//                        ->update([$headdata[$i]['key']=> $headdata[$i]['value']]);
-//                }
-
-                //评价表正面内容更新
-                for ($i=0;$i<count($frontdata);$i++)
-                {
-                    DB::table($TableName1)
-                        ->where('valueID','=',$valueID)
-                        ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
-                }
-
-                //评价表背面内容更新
+                    ->update([$frontdata[$i]['key']=> $frontdata[$i]['value']]);
+            }
+            for($i=0;$i<count($backdata);$i++)
+            {
+//                Log::info("yesyes");
                 DB::table($TableName2)
                     ->where('valueID','=',$valueID)
-                    ->delete();
-                //将表背面数据项制空
-                $flag1 = DB::table($TableName2)
-                    ->insert(
-                        [
-                            'valueID'=>$valueID,
-                            $headdata[0]['key']=> $headdata[0]['value'],//章节目录
-                            $headdata[1]['key']=> $headdata[1]['value'],//课程名称
-                            $headdata[2]['key']=> $headdata[2]['value'],//任课教师
-                            $headdata[3]['key']=> $headdata[3]['value'],//上课班级
-                            $headdata[4]['key']=> $headdata[4]['value'],//上课地点
-                            $headdata[5]['key']=> $headdata[5]['value'],//听课时间
-                            $headdata[6]['key']=> $headdata[6]['value'],//督导姓名
-                            $headdata[7]['key']=> $headdata[7]['value'],//课程属性
-                            $headdata[8]['key']=> $headdata[8]['value'],//督导id
-                            $headdata[9]['key']=> '第'.$headdata[9]['value'].'节',//听课节次
-//                            $headdata[10]['key']=> $headdata[10]['value'],//授课教师ID
-                            '评价状态'=>$lesson_state,
-                            '填表时间'=>date("Y-m-d")
-                        ]
-                    );
-
-
-                if ($lesson_state == '已完成')
-                    return '提交成功';
-                else
-                    return '保存成功';
+                    ->update([$backdata[$i]['key']=> $backdata[$i]['value']]);
             }
-
+            if ($lesson_state == '已完成')
+                return '提交成功';
+            else
+                return '保存成功';
         }
-        return '未知错误，请联系开发人员';
+
     }
 
 

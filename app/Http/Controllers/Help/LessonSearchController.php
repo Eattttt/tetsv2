@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class LessonSearchController extends Controller
 {
@@ -205,9 +204,6 @@ class LessonSearchController extends Controller
                 ->take(10)
                 ->get();
         }
-
-        Log::info($InputValue);
-
         return $InputValue;
     }
     //获取体育课程列表时使用

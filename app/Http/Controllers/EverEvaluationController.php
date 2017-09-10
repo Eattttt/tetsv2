@@ -23,6 +23,7 @@ class EverEvaluationController extends Controller
     public function EverEvaluated()
     {
         $frontdata=$this->GetFrontValueTable();
+//        dd($frontdata);
         for($i=0;$i<count($frontdata[1]);$i++)
             if($frontdata[1][$i]->text=='理论课评价表')break;
         $front =array(

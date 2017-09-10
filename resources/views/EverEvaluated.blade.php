@@ -502,217 +502,20 @@
                                                         <li class="active"><a href="#front" data-toggle="tab">评价表正面</a></li>
                                                         <li><a href="#back" data-toggle="tab" >评价表背面</a></li>
                                                     </ul>
+                                                    {{--<div id="myTabContent" class="tab-content content-font" style="padding-bottom: 70px">--}}
                                                     <div id="myTabContent" class="tab-content content-font" style="padding-bottom: 70px">
-                                                        <div class="tab-pane fade in active" id="front">
+                                                        {{--@include('particle.TheoryForm')--}}
+                                                        <div class="tab-pane fade in active" id="front" style="height:1300px;">
                                                             <div>
                                                                 {{--front 第一维数组是菜单等级，第二维数组是表的种类，第三维内容--}}
-                                                                <?php
-                                                                for($i=0;$i<count($front[1]);$i++)
-                                                                {
-                                                                    echo '
-                                            <ul class="grade1">
-                                                <li>
-                                                <span class="icon-folder-open-alt" style="display:none"></span>
-                                                <h1>'.$front[1][$i]->text.'</h1>';
-                                                                    if(!array_key_exists($i,$front[2]))continue;
-                                                                    $first=0;$last=-1;
-                                                                    $cnt=0;
-                                                                    while(1)
-                                                                    {
-                                                                        ++$cnt;
-                                                                        $first=$last+1;
-                                                                        while($last+1<count($front[2][$i])&&$front[2][$i][$last+1]->cssstyle==$front[2][$i][$first]->cssstyle)$last++;
-                                                                        $cssstyle=$front[2][$i][$first]->cssstyle;
-                                                                        switch($cssstyle)
-                                                                        {
-                                                                            case 1:
-                                                                                for($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo'
-                                                                <ul class="grade2">
-                                                                    <li>
-                                                                    <span style="float:left; margin-top: 4px;"></span>
-                                                                    <h2 style="width: 600px;">'.$front[2][$i][$j]->text.'</h2>';
-                                                                                    if(!array_key_exists($j,$front[3][$i]))continue;
-                                                                                    for($k=0;$k<count($front[3][$i][$j]);$k++)
-                                                                                    {
-                                                                                        echo '
-                                                                        <ul style="display: inline-block;" class="grade3">
-                                                                            <li style="margin-top: 20px;">
-                                                                            <h3>'.$front[3][$i][$j][$k]->text.'</h3>';
-                                                                                        echo '
-                                                                            </li>
-                                                                        </ul>';
-                                                                                    }
-                                                                                    echo '
-                                                                    </li>
-                                                                </ul>';
-                                                                                }
-                                                                                break;
-                                                                            case 2:
-                                                                                echo '<div style="margin-top: 40px;padding-top: 30px" class="radiograde">';
-                                                                                echo '<dd >';
-                                                                                for ($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo '<div class="radio" >';
-                                                                                    echo '    <label >';
-                                                                                    echo '    <input type="radio" name="optionsRadios'.$cnt.'" id="optionsRadios'.$j.'" value="option'.$j.'">';
-                                                                                    echo $front[2][$i][$j]->text;
-                                                                                    echo '   </label>';
-                                                                                    echo '</div>';
-                                                                                }
-                                                                                echo '</dd>';
-                                                                                echo '</div>';
-                                                                                break;
-                                                                            case 3:
-                                                                                echo '<div style="margin-top: 40px;padding-top: 30px" class="checkboxgrade">';
-                                                                                echo '<dd>';
-                                                                                for ($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo '<div class="checkbox">';
-                                                                                    echo '<label>';
-                                                                                    echo '<input type="checkbox" name="checkbox" value="checkbox">';
-                                                                                    echo $front[2][$i][$j]->text;
-                                                                                    echo '</label>';
-                                                                                    echo '</div>';
-                                                                                }
-                                                                                echo '</dd>';
-                                                                                echo '</div>';
-                                                                                break;
-                                                                            case 4:
-                                                                                echo '<ul  style="ul{text-align:center;list-style-type:none;}" class="textareagrade"> ';
-                                                                                for ($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo '<li class="textarea" style=""> ';
-                                                                                    echo '<form class="form-horizontal" > ';
-                                                                                    echo '<div  class="form-group"> ';
-                                                                                    echo '<label style="width: auto" class="col-sm-3 control-label" >';
-                                                                                    echo $front[2][$i][$j]->text;
-                                                                                    echo '</label> ';
-                                                                                    echo '<div class="col-sm-3" style="width: auto"> ';
-                                                                                    echo '<input type="text" class="form-control"> ';
-                                                                                    echo '</form>';
-                                                                                    echo '</li>';
-                                                                                }
-                                                                                echo '</ul>';
-                                                                                break;
-                                                                            default:
-                                                                                break;
-                                                                        }
-                                                                        if($last+1==count($front[2][$i]))break;
-                                                                    }
 
-                                                                    echo'
-                                                </li>
-                                            </ul>';
-                                                                }?>
+
                                                             </div>
+
                                                         </div>
                                                         <div class="tab-pane fade content-back" id="back">
-                                                            <div>
-                                                                {{--front 第一维数组是菜单等级，第二维数组是表的种类，第三维内容--}}
-                                                                <?php
-                                                                for($i=0;$i<count($back[1]);$i++)
-                                                                {
-                                                                    echo '
-                                            <ul class="grade1">
-                                                <li>
-                                                <span class="icon-folder-open-alt" style="display:none"></span>
-                                                <h1>'.$back[1][$i]->text.'</h1>';
-                                                                    if(!array_key_exists($i,$back[2]))continue;
-                                                                    $first=0;$last=-1;
-                                                                    $cnt=0;
-                                                                    while(1)
-                                                                    {
-                                                                        ++$cnt;
-                                                                        $first=$last+1;
-                                                                        while($last+1<count($back[2][$i])&&$back[2][$i][$last+1]->cssstyle==$back[2][$i][$first]->cssstyle)$last++;
-                                                                        $cssstyle=$back[2][$i][$first]->cssstyle;
 
-                                                                        switch($cssstyle)
-                                                                        {
-                                                                            case 1:
-                                                                                for($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo'
-                                                            <ul class="grade2">
-                                                                <li>
-                                                                <span style="float:left; margin-top: 4px;"></span>
-                                                                <h2 style="width: 600px;">'.$back[2][$i][$j]->text.'</h2>';
-                                                                                    if(!array_key_exists($j,$back[3][$i]))continue;
-                                                                                    for($k=0;$k<count($back[3][$i][$j]);$k++)
-                                                                                    {
-                                                                                        echo '
-                                                                        <ul style="display: inline-block;" class="grade3">
-                                                                            <li style="margin-top: 20px;">
-                                                                            <h3>'.$back[3][$i][$j][$k]->text.'</h3>';
-                                                                                        echo '
-                                                                            </li>
-                                                                      </ul>';
-                                                                                    }
-                                                                                    echo '
-                                                                </li>
-                                                            </ul>';
-                                                                                }
-                                                                                break;
-                                                                            case 2:
-                                                                                echo '<div style="margin-top: 40px;padding-top: 30px" class="radiograde">';
-                                                                                echo '<dd >';
-                                                                                for ($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo '<div class="radio" >';
-                                                                                    echo '    <label >';
-                                                                                    echo '    <input type="radio" name="optionsRadios'.$cnt.'" id="optionsRadios'.$j.'" value="option'.$j.'">';
-                                                                                    echo $back[2][$i][$j]->text;
-                                                                                    echo '   </label>';
-                                                                                    echo '</div>';
-                                                                                }
-                                                                                echo '</dd>';
-                                                                                echo '</div>';
-                                                                                break;
-                                                                            case 3:
-                                                                                echo '<div style="margin-top: 40px;padding-top: 30px" class="checkboxgrade">';
-                                                                                echo '<dd>';
-                                                                                for ($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo '<div class="checkbox">';
-                                                                                    echo '<label>';
-                                                                                    echo '<input type="checkbox" name="checkbox" value="checkbox">';
-                                                                                    echo $back[2][$i][$j]->text;
-                                                                                    echo '</label>';
-                                                                                    echo '</div>';
-                                                                                }
-                                                                                echo '</dd>';
-                                                                                echo '</div>';
-                                                                                break;
-                                                                            case 4:
-                                                                                echo '<ul  style="ul{text-align:center;list-style-type:none;}" class="textareagrade"> ';
-                                                                                for ($j=$first;$j<=$last;$j++)
-                                                                                {
-                                                                                    echo '<li class="textarea" style=""> ';
-                                                                                    echo '<form class="form-horizontal" > ';
-                                                                                    echo '<div  class="form-group"> ';
-                                                                                    echo '<label style="width: auto" class="col-sm-3 control-label" >';
-                                                                                    echo $back[2][$i][$j]->text;
-                                                                                    echo '</label> ';
-                                                                                    echo '<div class="col-sm-3" style="width: auto"> ';
-                                                                                    echo '<input type="text" class="form-control"> ';
-                                                                                    echo '</form>';
-                                                                                    echo '</li>';
-                                                                                }
-                                                                                echo '</ul>';
-                                                                                break;
-                                                                            default:
-                                                                                break;
-                                                                        }
-                                                                        if($last+1==count($back[2][$i]))break;
-                                                                    }
 
-                                                                    echo'
-                                                </li>
-                                            </ul>';
-                                                                }?>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -920,15 +723,14 @@
             '</ul> ' +
             '</div>');
 
-    var headnum = 12 ;//评价表头的个数
+    var headnum = 14 ;//评价表头的个数
 
 
     window.actionEvents = {
         'click .like': function (e, value, row, index) {//预览
             $("#detail").click();
-//            $('#front').empty();
-//            $('#back').empty();
-//            console.log(row);
+            $('#front').empty();
+            $('#back').empty();
             var valurID = row.valueID;
             var LessonName=row.课程名称.replace(/(^\s+)|(\s+$)/g,"");
             var LessonTeacher=row.任课教师.replace(/(^\s+)|(\s+$)/g,"");
@@ -949,6 +751,7 @@
                     Lesson_date:LessonValueTime,
                     Lessontime:LessonTime},//传递学院名称
                 success: function (result) {
+                    console.log(result);
                     var chapterVal=result[1][0].章节目录;
                     var LessonNameVal=result[1][0].课程名称;
                     var TeacherVal=result[1][0].任课教师;
@@ -977,137 +780,267 @@
                         $('#LessonSupervisor').val(ListenSupervisorIDVal+" "+ListenSupervisorVal);
                     }
 
+                    var FrontOne =[];
+                    var FrontTwo =[];
+                    var FrontThree =[];
+
+                    for (i=headnum;i<result[3].length;i++)
+                    {
+                        a='COLUMN_NAME';
+                        $('#front').append('<div class="line-1">'+'<div class="lineName">'+'<span class="icon-folder-open-alt">'+'</span>'+result[3][i][a]+'</div>'+
+                                '<div class="lineData">'+
+                                '<ul>'+
+                                '<li class="current">'+
+                                result[1][0][result[3][i][a]]+
+                                '</li>'+
+                                '</ul>'+
+                                '</div>'+'</div>');
+                        if ( result[1][0][result[3][i][a]]==null )
+                        {
+                            if(result[1][0][result[3][i+1][a]] == null )
+                                FrontOne.push(result[3][i][a]);
+                            else
+                                FrontTwo.push(result[3][i][a]);
+                        }
+                        else{
+                            FrontThree.push(result[3][i][a]);
+                        }
+                    }
+
+                    $('.line-1').each(function () {
+                        for(var i=0;i<FrontOne.length;i++)
+                        {
+                            if ($(this).text().indexOf(FrontOne[i])>=0)
+                            {
+                                $(this).addClass('front1');
+                                $(this).find('.lineData').css('display','none');
+                            }
+                        }
+                        $('.front1').css('font-size','200px');
+                        for(var i=0;i<FrontTwo.length;i++)
+                        {
+                            if ($(this).text().indexOf(FrontTwo[i])>=0)
+                            {
+                                $(this).addClass('front2');
+                                $(this).find('.lineData').css('display','none');
+                                $(this).find('.icon-folder-open-alt').css('display','none');
+                            }
+                        }
+                        for(var i=0;i<FrontThree.length-1;i++)
+                        {
+                            if ($(this).text().indexOf(FrontThree[i])>=0)
+                            {
+                                $(this).addClass('front3');
+                                $(this).find('.lineData').css('display','inline-block');
+                                $(this).find('.lineName').css('display','inline-block');
+                                $(this).find('.icon-folder-open-alt').css('display','none');
+                                $(this).find('.current').css('width','100px');
+                            }
+                        }
+                    });
+
+
+                    var BackOne =[];
+                    var BackTwo =[];
+                    var BackThree =[];
+                    for (i=headnum;i<result[4].length;i++)
+                    {
+                        a='COLUMN_NAME';
+                        if ( result[4][i][a].match(/\？/) != null )
+                        {
+                            BackOne.push(result[4][i][a]);
+                            $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                    '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                        }
+                        else if(result[4][i][a].match("评述1") != null||result[4][i][a].match("评述2") != null||result[4][i][a].match("评述3") != null){
+                            BackTwo.push(result[4][i][a]);
+                            $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                    '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                        }
+                        else if(result[4][i][a].match(1) != null||result[4][i][a].match(2) != null||result[4][i][a].match(3) != null){
+//                            $('#back').append('<div class="question">'+'<span><strong>·'+result[4][i][a]+'</strong></span>'+'</div>');
+                        }
+                        else{
+                            if(result[2]["0"][result[4][i][a]]=="1")
+                            {
+                                BackThree.push(result[4][i][a]);
+                                $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                        '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                            }
+                        }
+
+                    }
+                    console.log(BackOne);
+                    console.log(BackTwo);
+                    console.log(BackThree);
+                    $('.question').each(function () {
+                        for(var i=0;i<BackOne.length;i++)
+                        {
+                            if ($(this).text().indexOf(BackOne[i])>=0)
+                            {
+                                $(this).addClass('back1');
+                                $(this).append( '<i class="icon-chevron-right" style="float: left;margin-right: 6px;color: #CCCCCC;">'+
+                                        '</i>');
+                                $(this).find('.questionData').css('display','none');
+                                $(this).find('.icon-check').css('display','none');
+                            }
+                        }
+                        for(var i=0;i<BackTwo.length;i++)
+                        {
+                            if ($(this).text().indexOf(BackTwo[i])>=0)
+                            {
+                                $(this).addClass('back2');
+                                $(this).find('.icon-check').css('display','none');
+                            }
+                        }
+                        for(var i=0;i<BackThree.length;i++)
+                        {
+                            if ($(this).text().indexOf(BackThree[i])>=0)
+                            {
+                                $(this).find('.questionData').css('display','inline-block');
+                                if($(this).find('.questionData').text()=='null'){
+                                    $(this).find('.questionData').css('display','none');
+                                    $(this).find('.icon-check').css('display','none');
+                                    $(this).append( '<i class="icon-check-empty" style="float: left;margin-right: 6px;color: #CCCCCC;">'+
+                                            '</i>');
+                                }
+                                else {
+                                    $(this).find('.questionData').css('display','none');
+                                    $(this).find('.icon-check').css('margin-right','6px');
+                                }
+                            }
+                        }
+
+                    });
+
                     //移除标签中的类
-                    $('li').removeClass("current");
-                    $('input[type=checkbox]').attr('checked',false);
-
-                    for(i=0;i<$($('#front').children()[0]).children().length;i++)
-                    {
-                        var textlevel1=$($($($('#front').children()[0]).children()[i]).children()[0]).children()[1].innerText;
-                        for(var j=2;j<$($($($('#front').children()[0]).children()[i]).children()[0]).children().length;j++)
-                        {
-                            var cssstyle=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
-                            if(cssstyle=="grade2")
-                            {
-                                var textlevel2=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
-                                if(textlevel2.indexOf("总体评价")>=0)
-                                {
-                                    textlevel2=$.trim(textlevel2);
-                                    for(var p=0;p<$($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel2])
-                                        {
-                                            console.log($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()))
-                                            $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                    continue;
-                                }
-                                for(var k=2;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var textlevel3=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
-                                    textlevel3=$.trim(textlevel3);
-                                    for(var p=0;p<$($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel3])
-                                        {
-                                            $($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                }
-                            }
-                            if(cssstyle=="radiograde")
-                            {
-                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[1][0][choosecontent]==1)
-                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
-                                }
-                            }
-                            if(cssstyle=="checkboxgrade")
-                            {
-                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[1][0][choosecontent]==1)
-                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
-                                }
-                            }
-                            if(cssstyle=="textareagrade")
-                            {
-                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().length;k++)
-                                {
-                                    var text=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[0].innerText;
-                                    text=$.trim(text);
-                                    $($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[1]).children().val(result[1][0][text]);
-                                }
-                            }
-                        }
-                    }
-
-                    for(i=0;i<$($('#back').children()[0]).children().length;i++)
-                    {
-                        var textlevel1=$($($($('#back').children()[0]).children()[i]).children()[0]).children()[1].innerText;
-                        for(var j=2;j<$($($($('#back').children()[0]).children()[i]).children()[0]).children().length;j++)
-                        {
-                            var cssstyle=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
-                            if(cssstyle=="grade2")
-                            {
-                                var textlevel2=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
-                                if(textlevel2.indexOf("总体评价")>=0)
-                                {
-                                    textlevel2=$.trim(textlevel2);
-                                    for(var p=0;p<$($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel2])
-                                        {
-                                            $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                    continue;
-                                }
-                                for(var k=2;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var textlevel3=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
-                                    textlevel3=$.trim(textlevel3);
-                                    for(var p=0;p<$($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel3])
-                                        {
-                                            $($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                }
-                            }
-                            if(cssstyle=="radiograde")
-                            {
-                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[2][0][choosecontent]==1)
-                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true)
-                                }
-                            }
-                            if(cssstyle=="checkboxgrade")
-                            {
-                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[2][0][choosecontent]==1)
-                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
-                                }
-                            }
-                            if(cssstyle=="textareagrade")
-                            {
-                                var text=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().context.innerText;
-                                text=$.trim(text);
-                                $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[0]).children()[1]).children()[0]).val(result[2][0][text]);
-                            }
-                        }
-                    }
-
-
+                    //移除标签中的类
+//                    $('li').removeClass("current");
+//                    $('input[type=checkbox]').prop('checked',false);
+//                    for(i=0;i<$($('#front').children()[0]).children().length;i++)
+//                    {
+//                        var textlevel1=$($($($('#front').children()[0]).children()[i]).children()[0]).children()[1].innerText;
+//                        for(var j=2;j<$($($($('#front').children()[0]).children()[i]).children()[0]).children().length;j++)
+//                        {
+//                            var cssstyle=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
+//                            if(cssstyle=="grade2")
+//                            {
+//                                var textlevel2=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
+//                                if(textlevel2.indexOf("总体评价")>=0)
+//                                {
+//                                    textlevel2=$.trim(textlevel2);
+//                                    for(var p=0;p<$($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel2])
+//                                        {
+//                                            console.log($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()))
+//                                            $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                    continue;
+//                                }
+//                                for(var k=2;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var textlevel3=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
+//                                    textlevel3=$.trim(textlevel3);
+//                                    for(var p=0;p<$($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel3])
+//                                        {
+//                                            $($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                }
+//                            }
+//                            if(cssstyle=="radiograde")
+//                            {
+//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[1][0][choosecontent]==1)
+//                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
+//                                }
+//                            }
+//                            if(cssstyle=="checkboxgrade")
+//                            {
+//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[1][0][choosecontent]==1)
+//                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
+//                                }
+//                            }
+//                            if(cssstyle=="textareagrade")
+//                            {
+//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().length;k++)
+//                                {
+//                                    var text=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[0].innerText;
+//                                    text=$.trim(text);
+//                                    $($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[1]).children().val(result[1][0][text]);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    for(i=0;i<$($('#back').children()[0]).children().length;i++)
+//                    {
+//                        var textlevel1=$($($($('#back').children()[0]).children()[i]).children()[0]).children()[1].innerText;
+//                        for(var j=2;j<$($($($('#back').children()[0]).children()[i]).children()[0]).children().length;j++)
+//                        {
+//                            var cssstyle=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
+//                            if(cssstyle=="grade2")
+//                            {
+//                                var textlevel2=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
+//                                if(textlevel2.indexOf("总体评价")>=0)
+//                                {
+//                                    textlevel2=$.trim(textlevel2);
+//                                    for(var p=0;p<$($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel2])
+//                                        {
+//                                            $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                    continue;
+//                                }
+//                                for(var k=2;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var textlevel3=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
+//                                    textlevel3=$.trim(textlevel3);
+//                                    for(var p=0;p<$($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel3])
+//                                        {
+//                                            $($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                }
+//                            }
+//                            if(cssstyle=="radiograde")
+//                            {
+//                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[2][0][choosecontent]==1)
+//                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true)
+//                                }
+//                            }
+//                            if(cssstyle=="checkboxgrade")
+//                            {
+//                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[2][0][choosecontent]==1)
+//                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
+//                                }
+//                            }
+//                            if(cssstyle=="textareagrade")
+//                            {
+//                                var text=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().context.innerText;
+//                                text=$.trim(text);
+//                                $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[0]).children()[1]).children()[0]).val(result[2][0][text]);
+//                            }
+//                        }
+//                    }
 
                     if ($('#getid').val() == LessonSupervisor)
                     {
@@ -1137,19 +1070,59 @@
                                         '&Time='+ListenTimeVal+ '&Attr='+ListenAttrVal+
                                         '&Super='+ListenSupervisorIDVal+' '+ListenSupervisorVal);
                             }
-
-
-
                         });
                     }
                 }
             });
             $('span:contains("评价状态")').css('display','none');
             $('span:contains("评价状态")').prev().css('display','none');
+            for (var x=0;x<$('li.current').length;x++)
+            {
+                if($($('li.current')[x])["context"].innerText == "null" || $($('li.current')[x])["context"].innerText == "0" || $($('li.current')[x])["context"].innerText == "")
+                {
+                    $($($('li.current')[x]).parents('.line-1.front3')).css('display','none');
+                }
+            }
+            $.ajax({
+                type: "get",
+                async: false,
+                url: "/EvaluationCheckBox",
+                data: {
+                    year1:$("#year1").val(),
+                    year2:$("#year2").val(),
+                    semester:$("#terminal").val().match(/\d/g)
+                },
+                success: function (result) {
+//                    console.log(result.back);
+                    for (var x=0;x<$('.line-1.front3 .lineName').length;x++)
+                    {
+                        for(var key in result.front)
+                        {
+                            if($($('.line-1.front3 .lineName')[x])["0"].innerText == result.front[key].text)
+                            {
+                                $($('.line-1.front3 .lineName')[x]).next().find('li')["0"].innerHTML ="√";
+                                break;
+                            }
+                        }
+                    }
+//                    var long=$('#back .question span').length;
+//                    for (var x=0;x<long;x++)
+//                    {
+//                        if($('#back .question span')[x].innerText.indexOf("1")>=0 || $('#back .question span')[x].innerText.indexOf("2")>=0 || $('#back .question span')[x].innerText.indexOf("3")>=0 )
+//                        {
+//                            $ChangeText=$('#back .question span')[x].innerText;
+//                            $('#back .question')[x].innerHTML = "<h5><span><strong>·" + $ChangeText +"</strong></span></h5>";
+//                        }
+//                    }
+
+                }
+            });
+
         },
         'click .edit': function (e, value, row, index) {//评价详情
             $("#detail").click();
-
+            $('#front').empty();
+            $('#back').empty();
             var LessonName=row.课程名称.replace(/(^\s+)|(\s+$)/g,"");
             var LessonTeacher=row.任课教师.replace(/(^\s+)|(\s+$)/g,"");
             var LessonSupervisor=row.督导id.replace(/(^\s+)|(\s+$)/g,"");
@@ -1170,7 +1143,6 @@
                     Lesson_date:LessonValueTime,
                     Lessontime:LessonTime},//传递学院名称
                 success: function (result) {
-                    console.log(result);
                     var chapterVal=result[1][0].章节目录;
                     var LessonNameVal=result[1][0].课程名称;
                     var TeacherVal=result[1][0].任课教师;
@@ -1196,133 +1168,255 @@
                         $('#LessonSupervisor').val(ListenSupervisorIDVal+" "+ListenSupervisorVal);
                     }
 
-                    //移除标签中的类
-                    $('li').removeClass("current");
-                    $('input').removeAttr("checked");
-                    for(i=0;i<$($('#front').children()[0]).children().length;i++)
+                    var FrontOne =[];
+                    var FrontTwo =[];
+                    var FrontThree =[];
+
+                    for (i=headnum;i<result[3].length;i++)
                     {
-                        var textlevel1=$($($($('#front').children()[0]).children()[i]).children()[0]).children()[1].innerText;
-                        for(var j=2;j<$($($($('#front').children()[0]).children()[i]).children()[0]).children().length;j++)
+                        a='COLUMN_NAME';
+                        $('#front').append('<div class="line-1">'+'<div class="lineName">'+'<span class="icon-folder-open-alt">'+'</span>'+result[3][i][a]+'</div>'+
+                                '<div class="lineData">'+
+                                '<ul>'+
+                                '<li class="current">'+
+                                result[1][0][result[3][i][a]]+
+                                '</li>'+
+                                '</ul>'+
+                                '</div>'+'</div>');
+                        if ( result[1][0][result[3][i][a]]==null )
                         {
-                            var cssstyle=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
-                            if(cssstyle=="grade2")
-                            {
-                                var textlevel2=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
-                                if(textlevel2.indexOf("总体评价")>=0)
-                                {
-                                    textlevel2=$.trim(textlevel2);
-                                    for(var p=0;p<$($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel2])
-                                        {
-                                            $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                    continue;
-                                }
-                                for(var k=2;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var textlevel3=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
-                                    textlevel3=$.trim(textlevel3);
-                                    for(var p=0;p<$($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel3])
-                                        {
-                                            $($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                }
-                            }
-                            if(cssstyle=="radiograde")
-                            {
-                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[1][0][choosecontent]==1)
-                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).attr("checked","checked");
-                                }
-                            }
-                            if(cssstyle=="checkboxgrade")
-                            {
-                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[1][0][choosecontent]==1)
-                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).attr("checked","checked");
-                                }
-                            }
-                            if(cssstyle=="textareagrade")
-                            {
-                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().length;k++)
-                                {
-                                    var text=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[0].innerText;
-                                    text=$.trim(text);
-                                    $($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[1]).children().val(result[1][0][text]);
-                                }
-                            }
+                            if(result[1][0][result[3][i+1][a]] == null )
+                                FrontOne.push(result[3][i][a]);
+                            else
+                                FrontTwo.push(result[3][i][a]);
+                        }
+                        else{
+                            FrontThree.push(result[3][i][a]);
                         }
                     }
 
-                    for(i=0;i<$($('#back').children()[0]).children().length;i++)
-                    {
-                        var textlevel1=$($($($('#back').children()[0]).children()[i]).children()[0]).children()[1].innerText;
-                        for(var j=2;j<$($($($('#back').children()[0]).children()[i]).children()[0]).children().length;j++)
+                    $('.line-1').each(function () {
+                        for(var i=0;i<FrontOne.length;i++)
                         {
-                            var cssstyle=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
-                            if(cssstyle=="grade2")
+                            if ($(this).text().indexOf(FrontOne[i])>=0)
                             {
-                                var textlevel2=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
-                                if(textlevel2.indexOf("总体评价")>=0)
-                                {
-                                    textlevel2=$.trim(textlevel2);
-                                    for(var p=0;p<$($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel2])
-                                        {
-                                            $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                    continue;
-                                }
-                                for(var k=2;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var textlevel3=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
-                                    textlevel3=$.trim(textlevel3);
-                                    for(var p=0;p<$($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
-                                        if($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel3])
-                                        {
-                                            $($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
-                                            break;
-                                        }
-                                }
-                            }
-                            if(cssstyle=="radiograde")
-                            {
-                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[2][0][choosecontent]==1)
-                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).attr("checked",'checked')
-                                }
-                            }
-                            if(cssstyle=="checkboxgrade")
-                            {
-                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-                                {
-                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-                                    choosecontent=$.trim(choosecontent);
-                                    if(result[2][0][choosecontent]==1)
-                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).attr("checked",'checked');
-                                }
-                            }
-                            if(cssstyle=="textareagrade")
-                            {
-                                var text=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().context.innerText;
-                                text=$.trim(text);
-                                $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[0]).children()[1]).children()[0]).val(result[2][0][text]);
+                                $(this).addClass('front1');
+                                $(this).find('.lineData').css('display','none');
                             }
                         }
+                        $('.front1').css('font-size','200px');
+                        for(var i=0;i<FrontTwo.length;i++)
+                        {
+                            if ($(this).text().indexOf(FrontTwo[i])>=0)
+                            {
+                                $(this).addClass('front2');
+                                $(this).find('.lineData').css('display','none');
+                                $(this).find('.icon-folder-open-alt').css('display','none');
+                            }
+                        }
+                        for(var i=0;i<FrontThree.length-1;i++)
+                        {
+                            if ($(this).text().indexOf(FrontThree[i])>=0)
+                            {
+                                $(this).addClass('front3');
+                                $(this).find('.lineData').css('display','inline-block');
+                                $(this).find('.lineName').css('display','inline-block');
+                                $(this).find('.icon-folder-open-alt').css('display','none');
+                                $(this).find('.current').css('width','100px');
+                            }
+                        }
+                    });
+
+
+                    var BackOne =[];
+                    var BackTwo =[];
+                    var BackThree =[];
+                    for (i=headnum;i<result[4].length;i++)
+                    {
+                        a='COLUMN_NAME';
+                        $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                        //$('#back').append(result[4][i][a]+'<br>');
+                        if ( result[4][i][a].match(/\？/) != null )
+                        {
+                            BackOne.push(result[4][i][a]);
+                        }
+                        else if(result[4][i][a].match(/\。/) != null){
+                            BackTwo.push(result[4][i][a]);
+                        }
+                        else{
+                            BackThree.push(result[4][i][a]);
+                        }
+
                     }
+                    $('.question').each(function () {
+                        for(var i=0;i<BackOne.length;i++)
+                        {
+                            if ($(this).text().indexOf(BackOne[i])>=0)
+                            {
+                                $(this).addClass('back1');
+                                $(this).append( '<i class="icon-chevron-right" style="float: left;margin-right: 6px;color: #CCCCCC;">'+
+                                        '</i>');
+                                $(this).find('.questionData').css('display','none');
+                                $(this).find('.icon-check').css('display','none');
+                            }
+                        }
+                        for(var i=0;i<BackTwo.length;i++)
+                        {
+                            if ($(this).text().indexOf(BackTwo[i])>=0)
+                            {
+                                $(this).addClass('back2');
+                                $(this).find('.icon-check').css('display','none');
+                            }
+                        }
+                        for(var i=0;i<BackThree.length;i++)
+                        {
+                            if ($(this).text().indexOf(BackThree[i])>=0)
+                            {
+                                $(this).find('.questionData').css('display','inline-block');
+                                if( $(this).find('.questionData').text()=='null'){
+                                    $(this).find('.questionData').css('display','none');
+                                    $(this).find('.icon-check').css('display','none');
+                                    $(this).append( '<i class="icon-check-empty" style="float: left;margin-right: 6px;color: #CCCCCC;">'+
+                                            '</i>');
+                                }
+                                else {
+                                    $(this).find('.questionData').css('display','none');
+                                    $(this).find('.icon-check').css('margin-right','6px');
+                                }
+                            }
+                        }
+
+                    });
+
+                    //移除标签中的类
+                    //移除标签中的类
+//                    $('li').removeClass("current");
+//                    $('input[type=checkbox]').prop('checked',false);
+//                    for(i=0;i<$($('#front').children()[0]).children().length;i++)
+//                    {
+//                        var textlevel1=$($($($('#front').children()[0]).children()[i]).children()[0]).children()[1].innerText;
+//                        for(var j=2;j<$($($($('#front').children()[0]).children()[i]).children()[0]).children().length;j++)
+//                        {
+//                            var cssstyle=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
+//                            if(cssstyle=="grade2")
+//                            {
+//                                var textlevel2=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
+//                                if(textlevel2.indexOf("总体评价")>=0)
+//                                {
+//                                    textlevel2=$.trim(textlevel2);
+//                                    for(var p=0;p<$($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel2])
+//                                        {
+//                                            $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                    continue;
+//                                }
+//                                for(var k=2;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var textlevel3=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
+//                                    textlevel3=$.trim(textlevel3);
+//                                    for(var p=0;p<$($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel3])
+//                                        {
+//                                            $($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                }
+//                            }
+//                            if(cssstyle=="radiograde")
+//                            {
+//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[1][0][choosecontent]==1)
+//                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
+//                                }
+//                            }
+//                            if(cssstyle=="checkboxgrade")
+//                            {
+//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[1][0][choosecontent]==1)
+//                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
+//                                }
+//                            }
+//                            if(cssstyle=="textareagrade")
+//                            {
+//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().length;k++)
+//                                {
+//                                    var text=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[0].innerText;
+//                                    text=$.trim(text);
+//                                    $($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[1]).children().val(result[1][0][text]);
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    for(i=0;i<$($('#back').children()[0]).children().length;i++)
+//                    {
+//                        var textlevel1=$($($($('#back').children()[0]).children()[i]).children()[0]).children()[1].innerText;
+//                        for(var j=2;j<$($($($('#back').children()[0]).children()[i]).children()[0]).children().length;j++)
+//                        {
+//                            var cssstyle=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
+//                            if(cssstyle=="grade2")
+//                            {
+//                                var textlevel2=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
+//                                if(textlevel2.indexOf("总体评价")>=0)
+//                                {
+//                                    textlevel2=$.trim(textlevel2);
+//                                    for(var p=0;p<$($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel2])
+//                                        {
+//                                            $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                    continue;
+//                                }
+//                                for(var k=2;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var textlevel3=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
+//                                    textlevel3=$.trim(textlevel3);
+//                                    for(var p=0;p<$($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
+//                                        if($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel3])
+//                                        {
+//                                            $($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
+//                                            break;
+//                                        }
+//                                }
+//                            }
+//                            if(cssstyle=="radiograde")
+//                            {
+//                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[2][0][choosecontent]==1)
+//                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
+//                                }
+//                            }
+//                            if(cssstyle=="checkboxgrade")
+//                            {
+//                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
+//                                {
+//                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
+//                                    choosecontent=$.trim(choosecontent);
+//                                    if(result[2][0][choosecontent]==1)
+//                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
+//                                }
+//                            }
+//                            if(cssstyle=="textareagrade")
+//                            {
+//                                var text=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().context.innerText;
+//                                text=$.trim(text);
+//                                $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[0]).children()[1]).children()[0]).val(result[2][0][text]);
+//                            }
+//                        }
+//                    }
                 }
             });
             $('span:contains("评价状态")').css('display','none');
