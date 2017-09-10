@@ -458,18 +458,18 @@
                     <th data-field="Number" data-formatter="actionFormatterNumber" data-halign="center" data-align="center" >序号</th>
                     <th data-field="name" data-halign="center" data-align="center">督导姓名</th>
                     <th data-field="level" data-halign="center" data-align="center">督导角色</th>
-                    <th data-field="sex" data-halign="center" data-align="center">性别</th>
+                    {{--<th data-field="sex" data-halign="center" data-align="center">性别</th>--}}
                     <th data-field="state" data-halign="center" data-align="center">教师状态</th>
                     <th data-field="status" data-halign="center" data-align="center">督导状态</th>
                     <th data-field="group" data-halign="center" data-align="center">组别</th>
                     <th data-field="workstate" data-halign="center" data-align="center">督导类型</th>
                     <th data-field="unit" data-halign="center" data-align="center">所属单位</th>
-                    <th data-field="email" data-halign="center" data-align="center">邮箱</th>
+                    {{--<th data-field="email" data-halign="center" data-align="center">邮箱</th>--}}
                     <th data-field="phone" data-halign="center" data-align="center">电话</th>
                     <th data-field="supervise_time" data-halign="center" data-align="center"  data-sortable="true">
                         任职学期
                     </th>
-                    <th data-field="skill" data-halign="center" data-align="center">专业领域</th>
+                    {{--<th data-field="skill" data-halign="center" data-align="center">专业领域</th>--}}
                     @if(session('role')=='校级')
                     <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">修改信息</th>
                     @endif

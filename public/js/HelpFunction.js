@@ -630,10 +630,9 @@ function checkNeceHead_Input(LessonState)
 
 
 
-    if ($('.tab_menu').length != $('.current').length)
+    if ($('#front .tab_menu').length != $('#front .current').length)
     {
         flagC = 1;
-
         if(LessonState=='已完成')//已完成的话弹出提示框
         {
             alert('评价表正面信息未完成!');

@@ -39,7 +39,15 @@
     }
     #newmain{
     }
-
+    #front .checkboxgrade{
+        margin-left: 25px;
+    }
+    #front .radiograde{
+        margin-left: 25px;
+    }
+    #back .grade1 .checkboxgrade{
+        margin-left: 25px;
+    }
     #search-suggest{
         left: 95%;
         top: 200px;
@@ -207,9 +215,7 @@
                             <p style="font-size:20px; " class="panel-title">北京林业大学本科教学督导听课评价表(理论课评价用表)</p>
                         </div>
                         <div class="panel-body">
-                            <div class="info">
-                                <p style="font-size: 18px;">尊敬的督导：您辛苦了！请您在听课后，认真、负责地填写评价表。</p>
-                            </div>
+
                             <form class="form-horizontal">
                                 <div class="form-group">
 
@@ -314,15 +320,12 @@
 
                                 </tr>
                             </table>
-                            <div class="alert alert-danger" style="font-size: 19px; text-align: center;">
-                                <strong>  &nbsp;&nbsp;&nbsp;&nbsp; 注：</strong>
-                                &nbsp;&nbsp;&nbsp;（1）5个评价等级为：非常满意、满意、正常、存在不足、存在明显不足。<br>
-                                （2）评价内容共两部分：评价表正面和评价表背面。<br>
-                                （3）评价表正面除“章节目录、课程属性、学生到课情况、其他”外均为必填项，背面为选填项。<br>
-                                （4）此评价表为理论课评价表。<br>
-                                （5）教师授课情况“总体评价”为“非常满意”需满足条件：8项评价中，非常满意≥5，<br>
-                                其中标★项目评价必须为非常满意，且没有“存在不足”及以下；
-                                “存在明显不足”需满足条件：8项评价中，存在明显不足≥3。
+                            <div class="alert alert-danger" style="font-size: 19px; text-align: left;">
+                                <strong>注：</strong><br \>
+                                （1）评价表正面除“章节目录、课程属性、学生到课情况、其他”外均为必填项，评价表背面为选填项。<br \>
+                                （2）教师授课情况“总体评价”为“非常满意”需满足条件：8项评价中，非常满意≥5，
+                                其中标★项目评价必须为非常满意，且没有“存在不足”及以下；<br \>
+                                （3）教师授课情况“存在明显不足”需满足条件：8项评价中，存在明显不足≥3。
                             </div>
 
 
@@ -630,9 +633,7 @@
     var split_flag='___';//课程信息的分隔符
     function GetContent(LessonState)
     {
-//        var flagC =checkNeceHead_Input(LessonState);//0:成功通过验证，1：提交必填项失败 2：保存必填项失败
-//        2017-01-15暂时取消必填项检查功能
-        var flagC = 0 ;
+        var flagC =checkNeceHead_Input(LessonState);//0:成功通过验证，1：提交必填项失败 2：保存必填项失败
         var Frontlist=[];//正面选择框的值
         for(i=0;i<$($('#front').children()[0]).children().length;i++)
         {
@@ -1358,6 +1359,13 @@
                 }
             });
         }
+        for(var i=0;i<$('#front .textarea label').length;i++)
+        {
+            if ($('#front .textarea label')[i].innerText.indexOf("人数")>=0)
+            {
+                $('#front .textarea label')[i].before("（选填）");
+            }
+        }
         $("#LessonTime").focus(function (){
             $('#LessonTime-suggest').children().remove();
             if(LessonValue.value=='')
@@ -1375,7 +1383,13 @@
             }
         });
 
-
+        for(var i=0;i<$('#front h2').length;i++)
+        {
+            if ($('#front h2')[i].innerText.indexOf("总体评价")>=0)
+            {
+                $($('#front h2')[i]).parents('.grade2').css("background-color","aliceblue");
+            }
+        }
         $(function () {
             $("#LessonTime").click(function (event)
             {

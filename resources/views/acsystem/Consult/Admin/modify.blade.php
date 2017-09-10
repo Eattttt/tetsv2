@@ -165,7 +165,7 @@
 
                     <table data-toggle="table" id="consultTable"
                            data-halign="center" data-align="center"
-                           data-url="/consult/ConsultContent">
+                           data-url="/consult/ConsultContent" style="font-size: initial;">
                         <thead>
                         <tr>
                             <th data-field="choose" data-checkbox="true"></th>
