@@ -570,6 +570,17 @@ function checkNeceHead_Input(LessonState)
     }
     var flagC =0;
     //验证必填信息部分
+    if($('#inputChapter').val() == '')
+    {
+        if(LessonState=='已完成')//已完成的话弹出提示框
+        {
+            flagC = 1;
+        }else{
+            flagC = 2;//待提交
+        }
+        alert('请输入章节目录！');
+        return flagC;
+    }
     if($('#SearchBarID').val() === '' )
     {
         if(LessonState=='已完成')//已完成的话弹出提示框
@@ -579,6 +590,7 @@ function checkNeceHead_Input(LessonState)
             flagC = 2;//待提交
         }
         alert('请输入督导ID和姓名！');
+        return flagC;
     }
 
     //if($('#inputLessonAttr').val() === null)
@@ -591,7 +603,6 @@ function checkNeceHead_Input(LessonState)
     //    }
     //    alert('请输入课程属性！');
     //}
-
     if($('#LessonName').val() == '')
     {
         if(LessonState=='已完成')//已完成的话弹出提示框
@@ -601,6 +612,7 @@ function checkNeceHead_Input(LessonState)
             flagC = 2;//待提交
         }
         alert('请输入课程名称！');
+        return flagC;
     }
     if ( $('#ListenTime').val() =='')
     {
@@ -611,6 +623,7 @@ function checkNeceHead_Input(LessonState)
             flagC = 2;
         }
         alert('请输入听课时间！');
+        return flagC;
     }
     if ( $('#LessonTime').val() =='')
     {
@@ -621,21 +634,48 @@ function checkNeceHead_Input(LessonState)
             flagC = 2;
         }
         alert('请输入听课节次！');
-    }
-    if (flagC != 0)//保证头部必填信息全部填完
-    {
         return flagC;
     }
-
-
-
-
-    if ($('#front .tab_menu').length != $('#front .current').length)
-    {
-        flagC = 1;
-        if(LessonState=='已完成')//已完成的话弹出提示框
+    //if (flagC != 0)//保证头部必填信息全部填完
+    //{
+    //    return flagC;
+    //}
+    if(LessonState=='已完成'){
+        if ($('#front .tab_menu').length != $('#front .current').length)
         {
-            alert('评价表正面信息未完成!');
+
+            flagC = 1;
+            if(LessonState=='已完成')//已完成的话弹出提示框
+            {
+                alert('评价表正面信息未完成!');
+            }
+        }
+        for (var i=0;i<$('#front .grade2 h2').length;i++)
+        {
+            if($($('#front .grade2 h2')[i])["0"].innerText.indexOf("教师授课情况总体评价")>=0)
+            {
+                if ( $($('#front .grade2')[i]).find('.current'))
+                {
+                    if ( $($('#front .grade2')[i]).find('.bar1.current'))
+                    {
+                        if($($('#front .grade1')[0]).find('.grade2 .bar1.current').length<6)
+                        {
+                            flagC=1;
+                            alert('"教师授课情况总体评价”为“非常满意”的条件不满足！');
+                            break;
+                        }
+                    }
+                    else if ($($('#front .grade2')[i]).find('.bar5.current'))
+                    {
+                        if($($('#front .grade1')[0]).find('.grade2 .bar5.current').length<4)
+                        {
+                            flagC=1;
+                            alert('"教师授课情况总体评价”为“存在明显不足”的条件不满足！');
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
     return flagC;

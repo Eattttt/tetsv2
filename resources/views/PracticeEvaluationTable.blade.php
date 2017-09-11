@@ -221,7 +221,7 @@
 
                                     <span id="KIKO" for="inputChapter" class="col-lg-1" style="padding-top: 8px;">章节目录</span>
                                     <div id="KIKO1" class="col-sm-4">
-                                        <input type="text" class="form-control" id="inputChapter">
+                                        <input type="text" class="form-control" id="inputChapter" placeholder="必填">
                                     </div>
 
                                     <span id="KIKO" for="inputLessonAttr" class="col-lg-1" style="padding-top: 8px;">课程属性</span>
@@ -321,17 +321,15 @@
                             </table>
                             <div class="alert alert-danger" style="font-size: 19px; text-align: left;">
                                 <strong>注：</strong><br \>
-                                （1）评价表正面除“章节目录、课程属性、学生到课情况、其他”外均为必填项，评价表背面为选填项。<br \>
-                                （2）教师授课情况“总体评价”为“非常满意”需满足条件：8项评价中，非常满意≥5，
-                                其中标★项目评价必须为非常满意，且没有“存在不足”及以下；<br \>
-                                （3）教师授课情况“存在明显不足”需满足条件：8项评价中，存在明显不足≥3。
+                                （1）“教师授课情况总体评价”为“非常满意”，需满足如下条件：8项评价中，非常满意≥5，其中标★项目评价必须为非常满意；且没有“存在不足”及以下。<br \>
+                                （2）“教师授课情况总体评价”为“存在明显不足”，需满足如下条件：8项评价中，存在明显不足≥3。
                             </div>
 
 
 
                             <ul id="myTab" class="nav nav-tabs">
                                 <li class="active"><a href="#front" data-toggle="tab">评价表正面</a></li>
-                                <li><a href="#back" data-toggle="tab" >评价表背面</a></li>
+                                <li><a href="#back" data-toggle="tab" >评价表背面（选填）</a></li>
                             </ul>
                             <div id="myTabContent" class="tab-content content-font" style="padding-bottom: 70px">
                                 <div class="tab-pane fade in active" id="front">
@@ -344,7 +342,7 @@
                                             <ul class="grade1">
                                                 <li>
                                                 <span class="icon-folder-open-alt" style="display:none"></span>
-                                                <h1 style="width: 100%;">'.$front[1][$i]->text.'</h1>';
+                                                <h1 style="width: 100%;"><strong>'.$front[1][$i]->text.'</strong></h1>';
                                             if(!array_key_exists($i,$front[2]))continue;
                                             $first=0;$last=-1;
                                             $cnt=0;
@@ -545,7 +543,7 @@
                                         }?>
                                     </div>
                                 </div>
-                                <button class="btn btn-success btn-raised tabBack" style="float: right;display: block;margin-top: 10px;" >评价表背面</button>
+                                <button class="btn btn-success btn-raised tabBack" style="float: right;display: block;margin-top: 10px;" >评价表背面（选填）</button>
                                 <button class="btn btn-success btn-raised tabFront" style="float: right; display: none;"  >评价表正面</button>
                             </div>
                             <button class="btn btn-success btn-raised submitTable" style="float: right;margin-top: 46px;margin-left:8px;display: none" >提交评价表</button>
@@ -1393,9 +1391,10 @@
         {
             if ($('#front .textarea label')[i].innerText.indexOf("人数")>=0)
             {
-                $('#front .textarea label')[i].before("（选填）");
+                $($('#front .textarea label')[i]).parent().css('display','none');
             }
         }
+        $($('.radiograde')[0]).css('padding-top','60px');
         $(function () {
             $("#LessonTime").click(function (event)
             {
