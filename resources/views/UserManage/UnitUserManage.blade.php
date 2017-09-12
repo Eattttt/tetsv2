@@ -195,7 +195,6 @@
                 <thead>
                 <tr>
                     <th data-field="Number" data-formatter="actionFormatterNumber" data-halign="center" data-align="center" >序号</th>
-                    <th data-field="user_id" data-halign="center" data-align="center">登录ID</th>
                     <th data-field="name" data-halign="center" data-align="center">用户角色</th>
                     <th data-field="unit" data-halign="center" data-align="center">所属单位</th>
                     <th data-field="email" data-halign="center" data-align="center">邮箱</th>

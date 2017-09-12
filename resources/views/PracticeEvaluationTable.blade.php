@@ -309,7 +309,7 @@
                                     <th>上课地点</th>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="LessonName" placeholder="课程名   教师名进行搜索"></td>
+                                    <td><input type="text" class="form-control" id="LessonName" placeholder="请输入课程名称和教师姓名"></td>
                                     <td><input type="text" class="form-control" id="Teacher" readonly="readonly"></td>
                                     <input type="text" class="form-control" id="TeacherID" readonly="readonly" style="display: none">
                                     <td><input type="text" class="form-control" id="ListenTime" placeholder="选择日期"></td>

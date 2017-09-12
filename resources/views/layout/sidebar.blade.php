@@ -694,15 +694,15 @@ border-right: 1px solid #eee;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px
                     </a>
                     <ul id="UserManage" class="nav nav-list collapse in">
                         <li class="indents">
-                            <a href="/activity/index-suv" class="nav-header" style="font-size: 15px;">
+                            <a href="/activity/index-suv" class="nav-header" >
                                 <i class="icon-minus" ></i>
-                                报名培训活动
+                                培训活动报名
                             </a>
                         </li>
                         <li class="indents">
-                            <a href="/consult/index-suv" class="nav-header" style="font-size: 15px;">
+                            <a href="/consult/index-suv" class="nav-header" >
                                 <i class="icon-minus" ></i>
-                                报名教学咨询
+                                预约教学咨询
                             </a>
                         </li>
                         {{--<li class="indents">--}}
