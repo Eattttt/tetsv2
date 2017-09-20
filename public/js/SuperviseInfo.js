@@ -306,6 +306,32 @@ $(document).ready(function() {
         });
     });
 
+    $('#DeleteSupInfo').click(function(){
+        var div1=$("#change_begin_time").val().split("-");
+        var div2=$("#change_end_time").val().split("-");
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "/DeleteSupInfo",
+            data:{
+                id: $('#user_id').val(),
+                time_start_year1 :div1[0],
+                //time_start_year2 :$("#year2C1").val(),
+                time_start_terminal :div1[2],
+                time_end_year1 :div2[0],
+                //time_end_year2 :$("#year2C2").val(),
+                time_end_terminal :div2[2]
+            },
+            success: function(result){
+                if(result!=0)
+                    alert('删除成功！');
+                else{
+                    alert("删除失败！");
+                }
+            }
+        });
+    });
+
     $('#level1').blur(function (){
         if($('#level1 option:selected').text()=='院级' || $('#level1 option:selected').text()=='校级' || $('#level1 option:selected').text()=='大组长')
         {

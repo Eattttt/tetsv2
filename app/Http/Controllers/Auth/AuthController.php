@@ -125,8 +125,12 @@ class AuthController extends Controller
             } else {
                 $remember = $request->input('remember');
             }
+
+
+
+
             //如果要使用记住密码的话，需要在数据表里有remember_token字段
-            if (\Auth::attempt(['user_id' => $user_id, 'password' => $password, 'status' => '活跃'], $remember)) {
+            if (\Auth::attempt(['user_id' => $user_id, 'password' => $password], $remember)) {
 //            dd($request->all());
                 if(is_weixin() == true)
                 {

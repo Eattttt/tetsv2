@@ -195,7 +195,7 @@
                 <thead>
                 <tr>
                     <th data-field="Number" data-formatter="actionFormatterNumber" data-halign="center" data-align="center" >序号</th>
-                    <th data-field="name" data-halign="center" data-align="center">用户角色</th>
+                    <th data-field="alias" data-halign="center" data-align="center">用户角色</th>
                     <th data-field="unit" data-halign="center" data-align="center">所属单位</th>
                     <th data-field="email" data-halign="center" data-align="center">邮箱</th>
                     <th data-field="phone" data-halign="center" data-align="center">电话</th>

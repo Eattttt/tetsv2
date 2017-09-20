@@ -164,6 +164,7 @@
             url:"/GetStatus",
             data:{id:$('#id').val().replace(/(^\s*)|(\s*$)/g, ""),year:year1+'-'+year2+'-'+terminal},
             success:function(result){
+//                console.log(result);
                 for (i=0;i<result.length;i++)
                 {
 //                    url = 'admin/user/switch/start/'+result[0]['id'];

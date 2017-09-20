@@ -422,7 +422,7 @@
 
                                         <div class="dtpicker-compOutline dtpicker-comp3">
                                             <div class="dtpicker-comp ">
-                                                <a class="dtpicker-compButton increment dtpicker-compButtonEnableC1">+</a>
+                                                <a class="dtpicker-compButton increment dtpicker-compButtonEnableC2">+</a>
                                                 <input type="text" class="dtpicker-compValue" id="terminalC2" disabled="disabled">
                                                 <a class="dtpicker-compButton decrement dtpicker-compButtonEnableC2">-</a>
                                             </div>
@@ -527,7 +527,7 @@
                                         <div class="form-group">
                                             <span class="h4">签约状态
                                                 <select class="form-control" name="status"  style="display: inline-block!important;">
-                                                    <option>活跃</option>
+                                                    <option>正在担任督导</option>
                                                     <option>不再担任督导</option>
                                                 </select>
                                             </span>
@@ -717,7 +717,7 @@
                                             <div class="form-group ">
                                                 <span for="email">签约状态</span>
                                                 <select class="form-control" name="status" id="status">
-                                                    <option>活跃</option>
+                                                    <option>正在担任督导</option>
                                                     <option>不再担任督导</option>
                                                 </select>
                                             </div>
@@ -832,6 +832,7 @@
                                     </div>
                                     <button class="btn btn-info btn-raised" style="float: right; width:100px;margin-left:10px;" >保存信息</button>
                                     <a class="btn btn-warning btn-raised" id="reset" style="float:right;width:100px;">重置密码</a>
+                                    <a class="btn btn-danger btn-raised" id="DeleteSupInfo" style="float:right;margin-right: 10px;" >删除对应学期信息</a>
                                 </form>
 
 
@@ -860,11 +861,20 @@
 <script src="{{asset('js/SuperviseInfo.js')}}"></script>
 
 <script>
-
-    if("{{ $title }}" != '')
+    var url=location.href;
+    url = url.replace(/</g,"&lt;").replace(/>/g,"&gt");
+    var tmp1=url.split("?")[1];
+    if (tmp1!=null)
     {
-        alert('{{ $title }}');
+        var title=tmp1.split("=")[1];
+        alert(decodeURI(title));
+        window.location.href = '/SupervisorInfo';
     }
+
+    {{--if("{{ $title }}" != '')--}}
+    {{--{--}}
+        {{--alert('{{ $title }}');--}}
+    {{--}--}}
 
 </script>
 </html>

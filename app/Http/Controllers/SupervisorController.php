@@ -117,6 +117,44 @@ class SupervisorController extends Controller
         return $flag;
     }
 
+    //校级管理员重置密码功能。
+    public function DeleteSupInfo(Request $request)
+    {
+        $arrTime = [];
+        $year1 =$request->time_start_year1;
+        $terminal1 =$request->time_start_terminal;
+        $flag = 1;
+        while(true)
+        {
+            $next=$year1+1;
+            $text=$year1."-".$next."-".$terminal1;
+            array_push($arrTime,$text);
+            if($terminal1==1)
+            {
+                if($year1>=$request->time_end_year1&& $terminal1==$request->time_end_terminal)
+                {
+                    break;
+                }
+                $terminal1++;
+            }
+            else
+            {
+                if($year1>=$request->time_end_year1&& $terminal1==$request->time_end_terminal)
+                {
+                    break;
+                }
+                $year1++;
+                $terminal1=1;
+            }
+        }
+        $id1 = "select id from users WHERE user_id = ".$request->id;
+        for($i=0;$i<count($arrTime);$i++)
+        {
+            DB::delete('delete from role_user WHERE user_id=('.$id1.') AND role_id=5 AND supervise_time ="'.$arrTime[$i].'"');
+        }
+        return $flag;
+    }
+
     /**
      * @return string
      * 校级，查看督导所有的信息
@@ -130,7 +168,7 @@ class SupervisorController extends Controller
         if($TimeFlag==null)
         {
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group",
                     "workstate","unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -142,7 +180,7 @@ class SupervisorController extends Controller
         else{
 
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group",
                     "workstate","unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -172,7 +210,7 @@ class SupervisorController extends Controller
         if($TimeFlag==null)
         {
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group",
                     "workstate","unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -186,7 +224,7 @@ class SupervisorController extends Controller
         else{
 
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group",
                     "workstate","unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -216,7 +254,7 @@ class SupervisorController extends Controller
         if($TimeFlag==null)
         {
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group","workstate",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group","workstate",
                     "unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -230,7 +268,7 @@ class SupervisorController extends Controller
         else{
 
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group","workstate",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group","workstate",
                     "unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -256,7 +294,7 @@ class SupervisorController extends Controller
         if($TimeFlag==null)
         {
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group",
                     "workstate","unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -270,7 +308,7 @@ class SupervisorController extends Controller
         else{
 
             $record = DB::table('role_user')
-                ->select('users.user_id','users.name','roles.name as level','sex',"state","status","group",
+                ->select('users.user_id','users.name','roles.name as level','sex',"state","role_user.status","group",
                     "workstate","unit","email","phone","supervise_time","skill")
                 ->leftjoin('users','role_user.user_id','=','users.id')
                 ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -292,14 +330,16 @@ class SupervisorController extends Controller
     {
         $title=null;
         $help = New HelpController;
-        //一次续聘4个学期
-        $TermNum = 4;
+        //一次续聘4个学期, 第一为是本聘期的最后一个学期
+        $TermNum = 5;
         //目前聘期的结束学期
-        $currentEndTerm = DB::table('role_user')->max('supervise_time');
-        //下一个聘期的结束学期
-        $termArray=$help->CaculateTerm($currentEndTerm, $TermNum);
-        $nextTime =max($termArray);
+        $currentEmploymentId = DB::table('employment_term')->max('id');
+        $currentEmployment = DB::table('employment_term')->where('id', '=', $currentEmploymentId)->get();
 
+        //下一个聘期的结束学期
+        $termArray=$help->CaculateTerm($currentEmployment[0]->employment_end_term, $TermNum);
+        $nextTime =max($termArray);
+        $currentEndTerm = $currentEmployment[0]->employment_end_term;
         return view('UserManage.SupervisorInfo',compact('title','currentEndTerm','nextTime'));
     }
 
@@ -313,7 +353,7 @@ class SupervisorController extends Controller
         $user_id = $request->data;
         $record = DB::table('role_user')
             ->select('users.id','users.user_id','users.name','roles.name as level','sex',
-                "state","status","group","workstate","unit","email",
+                "state","role_user.status","group","workstate","unit","email",
                 "phone","supervise_time","skill","prorank")
             ->leftjoin('users','role_user.user_id','=','users.id')
             ->leftjoin('roles','role_user.role_id','=','roles.id')
@@ -332,7 +372,7 @@ class SupervisorController extends Controller
      * @param $id
      * users table's primary key:id
      */
-    protected function addRole($userInfo, $id){
+    protected function addRole($userInfo, $id, $supervisor_state){
         $changetime1 =$userInfo['change_begin_time'];
         $changetime2 =$userInfo['change_end_time'];
         $help=new HelpController;
@@ -348,9 +388,10 @@ class SupervisorController extends Controller
             array_push($role , Role::find(4));
         if (array_key_exists('dudao',$userInfo))
             array_push($role , Role::find(5));
+        //用户默认身份为教师
+        array_push($role , Role::find(6));
         //更新单个督导信息的 role_user 表
         $user = \App\Model\User::find($id);
-
 
         for($iterm=0;$iterm<count($termArray);$iterm++)
         {
@@ -365,8 +406,11 @@ class SupervisorController extends Controller
         {
             for($iterm=0;$iterm<count($termArray);$iterm++)
             {
-                $user->roles()->attach($role[$irole],['supervise_time' => $termArray[$iterm]]);
-            }
+                $user->roles()->attach($role[$irole],
+                    [
+                        'supervise_time' => $termArray[$iterm],
+                        'status' =>$supervisor_state
+                    ]);            }
         }
 
     }
@@ -393,22 +437,48 @@ class SupervisorController extends Controller
         $supervisor_skill = $request->get('skill');
         $nextTime = null;
         $currentEndTerm = null;
-        $flag1=\App\Model\User::updateOrCreate(
-            ['user_id' => $user_id ],
-            [
-                'email'=>$supervisor_email,
-                'phone'=>$supervisor_phone,
-                'state'=>$supervisor_state,
-                'unit'=>$supervisor_unit,
-                'skill'=>$supervisor_skill,
-                'ProRank'=>$supervisor_ProRank,
-                'status'=>$supervisor_status,
-                'workstate'=>$supervisor_workstate,
-                'group'=>$supervisor_group,
-                'name'=>$supervisor_name,
-                'sex'=>$supervisor_sex
-            ]
-        );
+
+        $flag1 = DB::table('users')->where('user_id' , $user_id)->first();
+        if($flag1 != null)
+        {
+            DB::table('users')
+                ->where('id', $user_id)
+                ->update([
+                    'email'=>$supervisor_email,
+                    'phone'=>$supervisor_phone,
+                    'state'=>$supervisor_state,
+                    'unit'=>$supervisor_unit,
+                    'skill'=>$supervisor_skill,
+                    'ProRank'=>$supervisor_ProRank,
+                    'status'=>'活跃',
+                    'workstate'=>$supervisor_workstate,
+                    'group'=>$supervisor_group,
+                    'name'=>$supervisor_name,
+                    'sex'=>$supervisor_sex
+                ]);
+        }
+        else
+        {
+            // 插入
+            DB::table('users')->insert(
+                [
+                    'user_id' => $user_id,
+                    'email'=>$supervisor_email,
+                    'password'=>bcrypt($user_id),
+                    'phone'=>$supervisor_phone,
+                    'state'=>$supervisor_state,
+                    'unit'=>$supervisor_unit,
+                    'skill'=>$supervisor_skill,
+                    'ProRank'=>$supervisor_ProRank,
+                    'status'=>'活跃',
+                    'workstate'=>$supervisor_workstate,
+                    'group'=>$supervisor_group,
+                    'name'=>$supervisor_name,
+                    'sex'=>$supervisor_sex
+                ]
+            );
+        }
+
 
         if(array_key_exists('tid',$userInfo))//form table comes from change user information
             $id = $userInfo['tid'];
@@ -417,12 +487,15 @@ class SupervisorController extends Controller
             $id = DB::table('users')->select('id')->where('user_id',$user_id)->get();
             $id = $id[0]->id;
         }
-        $this->addRole($userInfo, $id);
+        $this->addRole($userInfo, $id, $supervisor_status);
 
 
         $title='操作成功！';
 
-        return view('UserManage.SupervisorInfo',compact('title','EndTime','nextTime','currentEndTerm'));
+//        return view('UserManage.SupervisorInfo',compact('title','EndTime','nextTime','currentEndTerm'));
+        return redirect()->action('SupervisorController@SupervisorInfo',[
+                'title'=>$title]
+        );
     }
 
     /*
@@ -436,40 +509,60 @@ class SupervisorController extends Controller
         $help=new HelpController;
         //calculate current term
         $currentTerm = $help->GetYearSemester($time);
-
-        //4 terms as one period, 1 term is current term
+        //一键续约过程默认为 正在担任督导
+        $supervisor_state = '正在担任督导';
         $TermNum = 5;
         //the end term of current period
-        $currentEndTerm = DB::table('role_user')->max('supervise_time');
+        //目前聘期的结束学期
+        $currentEmploymentId = DB::table('employment_term')->max('id');
+        $currentEmployment = DB::table('employment_term')->where('id', '=', $currentEmploymentId)->get();
+        $currentEndTerm = $currentEmployment[0]->employment_end_term;
+
         //end term of next period, store in variable:nextTime
         $termArray=$help->CaculateTerm($currentEndTerm, $TermNum);
+
         $nextTime =max($termArray);
+        $nextTimeStart =$termArray[1];
 
         //if current term equal to the end term of current period
         if($currentTerm['YearSemester']==$currentEndTerm)
         {
-            $users = DB::table('users')
-                ->select('id')
-                ->where('name','not like','%负责人')->get();
+
+            //更新督导续约状态记录表
+            DB::table('employment_term')->insert(
+                [
+                    'employment_start_term' =>$nextTimeStart,
+                    'employment_end_term' => $nextTime
+                ]
+            );
+            //把user表中和role_user表中的状态为活跃的人选出来
+            $users = DB::table('role_user')
+                ->select('user_id')
+                ->where('status','=','正在担任督导')
+                ->distinct()->get();
 //            change_begin_time, change_end_time, xiaoji, dazuzhang. xiaozuzhang, dudao
             for($iuser=0; $iuser<count($users); $iuser++)
             {
-                $userInfo = $this->GetUserRoles($users[$iuser]->id, $currentEndTerm);
+                $userInfo = $this->GetUserRoles($users[$iuser]->user_id, $currentEndTerm);
                 //the new contract is begin with new term, so the index is 1
                 $userInfo['change_begin_time'] = $termArray[0];
                 $userInfo['change_end_time'] = $nextTime;
 
-                $this->addRole($userInfo, $users[$iuser]->id);
+                $this->addRole($userInfo, $users[$iuser]->user_id, $supervisor_state);
             }
 
             $title = "续约成功！";
-            return view('UserManage.SupervisorInfo',compact('title','currentEndTerm','nextTime'));
+            return redirect()->action('SupervisorController@SupervisorInfo',[
+                'title'=>$title]
+               );
+//            return view('UserManage.SupervisorInfo',compact('title','currentEndTerm','nextTime'));
         }
 
         else{
             $title='续约期未结束！';
-            return view('UserManage.SupervisorInfo',compact('title','currentEndTerm','nextTime'));
-
+            return redirect()->action('SupervisorController@SupervisorInfo',[
+                    'title'=>$title]
+            );
         }
     }
 

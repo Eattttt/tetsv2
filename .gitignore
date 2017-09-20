@@ -8,3 +8,5 @@ Homestead.json
 .env
 *.xml
 *.xml
+.idea/.name
+.idea/tets.iml

@@ -36,20 +36,24 @@ class UserController extends Controller
     {
         $tid = $request->id;
         $year = $request->year;
-//        Log::info($year);
+
 
         $user = User::where('id',$tid)->with(['roles'=>function($query) use ($year){
             return $query->where( 'supervise_time' ,'=' ,$year ) ;
         }])->get();
 
        if(empty($user[0]->roles[0])){//must be a teacher
-           $user = User::where('id',$tid)->with("roles")->get();
+           $user = User::where('id',$tid)->with(['roles'=>function($query) use ($year){
+               return $query->where( 'role_id' ,'=' ,6 ) ;
+           }])->get();
        }
+
         if(session('role') == null)
         {
             $role = $user[0]->roles[0]->name;
             session(['role'=>$role]);
         }
+
         $data = $user[0]->roles;
         return $data;
     }

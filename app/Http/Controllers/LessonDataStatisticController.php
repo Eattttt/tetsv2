@@ -74,7 +74,7 @@ class LessonDataStatisticController extends Controller
         $table1 = "front_theory_evaluation".$TableName;
         $table = "front_contents".$TableName;
 
-        $Comparison = ['不足','明显不足','正常','满意','非常满意'];
+        $Comparison = ['明显不足','不足','正常','满意','非常满意'];
 
         //授课总体评价统计图
         $data = array();
@@ -1187,7 +1187,7 @@ class LessonDataStatisticController extends Controller
         $table3 = "front_physical_evaluation".$TableName;
         $table = "front_contents".$TableName;
 
-        $Comparison = ['不足','明显不足','正常','满意','非常满意'];
+        $Comparison = ['明显不足','不足','正常','满意','非常满意'];
 
         //授课总体评价统计图
         $data = array();
@@ -1713,7 +1713,6 @@ class LessonDataStatisticController extends Controller
         ];
 //        Log::info($data);
         return ($data);
-
     }
 
 }

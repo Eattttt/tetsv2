@@ -155,6 +155,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/ResetPass', 'SupervisorController@ResetPass');//reset the password
+    Route::get('/DeleteSupInfo', 'SupervisorController@DeleteSupInfo');//delete the supervisor_time
     //supervisor management
     Route::get('/SupervisorInfo', 'SupervisorController@SupervisorInfo');//the view of supervisor management
     Route::post('/ChangeSupervisorInfo', 'SupervisorController@ChangeSupervisorInfo');//change/add the supervisor's information

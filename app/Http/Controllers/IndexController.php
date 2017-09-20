@@ -76,7 +76,7 @@ class IndexController extends Controller
             ->whereIn('role_user.role_id',[3,4,5])
             ->where('role_user.supervise_time','=',$Term['YearSemester'])
             ->where('users.user_id','!=','admin')// expect the test user
-            ->where('status','=','活跃')
+            ->where('role_user.status','=','正在担任督导')
             ->distinct()
             ->get();
         return count($num);
@@ -90,7 +90,7 @@ class IndexController extends Controller
             ->where('unit','=',$unit)
             ->where('role_user.supervise_time','=',$Term['YearSemester'])
             ->where('users.user_id','!=','admin')// expect the test user
-            ->where('status','=','活跃')
+            ->where('role_user.status','=','正在担任督导')
             ->distinct()
             ->get();
         return count($num);
@@ -104,7 +104,7 @@ class IndexController extends Controller
             ->where('group','=',$group)
             ->where('role_user.supervise_time','=',$Term['YearSemester'])
             ->where('users.user_id','!=','admin')// expect the test user
-            ->where('status','=','活跃')
+            ->where('role_user.status','=','正在担任督导')
             ->distinct()
             ->get();
         return count($num);
@@ -356,14 +356,16 @@ ORDER BY 听课时间 ');
         if ($level =='校级' || $level=='大组长')
         {
             $PNum = DB::table('users')
+                ->leftjoin('role_user','role_user.user_id','=', 'users.id' )
                 ->where('workstate','=','兼职')
-                ->where('status','=','活跃')
+                ->where('role_user.status','=','正在担任督导')
 //                ->where('supervise_time','=',$Time['YearSemester'])
                 ->distinct()
                 ->count('user_id');
             $FNum = DB::table('users')
+                ->leftjoin('role_user','role_user.user_id','=', 'users.id' )
                 ->where('workstate','=','专职')
-                ->where('status','=','活跃')
+                ->where('role_user.status','=','正在担任督导')
 //                ->where('supervise_time','=',$Time['YearSemester'])
                 ->distinct()
                 ->count('user_id');
@@ -373,15 +375,17 @@ ORDER BY 听课时间 ');
             $group = $request->get('unit');
 
             $PNum = DB::table('users')
+                ->leftjoin('role_user','role_user.user_id','=', 'users.id' )
                 ->where('workstate','=','兼职')
-                ->where('status','=','活跃')
+                ->where('role_user.status','=','正在担任督导')
                 ->where('group','=',$group)
 //                ->where('supervise_time','=',$Time['YearSemester'])
                 ->distinct()
                 ->count('user_id');
             $FNum = DB::table('users')
+                ->leftjoin('role_user','role_user.user_id','=', 'users.id' )
                 ->where('workstate','=','专职')
-                ->where('status','=','活跃')
+                ->where('role_user.status','=','正在担任督导')
                 ->where('group','=',$group)
 //                ->where('supervise_time','=',$Time['YearSemester'])
                 ->distinct()
@@ -392,15 +396,17 @@ ORDER BY 听课时间 ');
             $unit = $request->get('unit');
 
             $PNum = DB::table('users')
+                ->leftjoin('role_user','role_user.user_id','=', 'users.id' )
                 ->where('workstate','=','兼职')
-                ->where('status','=','活跃')
+                ->where('role_user.status','=','正在担任督导')
                 ->where('unit','=',$unit)
 //                ->where('supervise_time','=',$Time['YearSemester'])
                 ->distinct()
                 ->count();
             $FNum = DB::table('users')
+                ->leftjoin('role_user','role_user.user_id','=', 'users.id' )
                 ->where('workstate','=','专职')
-                ->where('status','=','活跃')
+                ->where('role_user.status','=','正在担任督导')
                 ->where('unit','=',$unit)
 //                ->where('supervise_time','=',$Time['YearSemester'])
                 ->distinct()

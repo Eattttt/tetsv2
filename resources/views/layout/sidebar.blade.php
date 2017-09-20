@@ -393,7 +393,7 @@ border-right: 1px solid #eee;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px
                 <li class="Unituser-menu" style="margin-top: 20px;background-color: rgba(16, 33, 49, 0.86);border-left:3px solid #73C4B1; ">
                     <a href="/UnitUserManage" class="nav-header" style="font-size: 15px;">
                         <i class="icon-user"></i>
-                        学院用户列表
+                        学院教学院长
                     </a>
                 </li>
                 {{--<li class="user-menu" style="border-left:3px solid #4AA3DE;">--}}
@@ -539,7 +539,7 @@ border-right: 1px solid #eee;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px
                 <li class="Unituser-menu" style="margin-top: 20px;background-color: rgba(16, 33, 49, 0.86);border-left:3px solid #73C4B1; ">
                     <a href="/UnitUserManage" class="nav-header" style="font-size: 15px;">
                         <i class="icon-user"></i>
-                        学院用户列表
+                        学院教学院长
                     </a>
                 </li>
                 {{--<li class="user-menu" style="border-left:3px solid #4AA3DE;">--}}
@@ -682,7 +682,7 @@ border-right: 1px solid #eee;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px
             <li class="Unituser-menu" style="margin-top: 20px;background-color: rgba(16, 33, 49, 0.86);border-left:3px solid #73C4B1; ">
                 <a href="/UnitUserManage" class="nav-header" style="font-size: 15px;">
                      <i class="icon-user"></i>
-                        学院用户列表
+                    学院教学院长
                 </a>
             </li>
 

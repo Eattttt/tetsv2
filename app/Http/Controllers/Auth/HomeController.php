@@ -329,20 +329,20 @@ class HomeController extends Controller
             $this->DeepFirstSearchFrontTheoryTable($str,$newresult);
         }
     }
-    public function DeepFirstSearchBackTheoryTable(&$str,$result)
+    public function DeepFirstSearchBackTheoryTable(&$str,$result,$con)
     {
         $version = new HelpController;
         $current = '2017-2018-1';
         $TableName = $version->GetCurrentTableName($current);
 
-        $con=mysqli_connect("localhost","root","","tets");
+//        $con=mysqli_connect("localhost","root","","tets");
         mysqli_query($con,'set names utf8');
 
         for($i=0;$i<count($result);$i++)
         {
             $str .=$result[$i]->text .' varchar(255),';
             $newresult=DB::table('back_contents'.$TableName)->where('fid','=',$result[$i]->id)->get();
-            $this->DeepFirstSearchBackTheoryTable($str,$newresult);
+            $this->DeepFirstSearchBackTheoryTable($str,$newresult,$con);
         }
     }
 
@@ -362,20 +362,20 @@ class HomeController extends Controller
             $this->DeepFirstSearchFrontPracticeTable($str,$newresult);
         }
     }
-    public function DeepFirstSearchBackPracticeTable(&$str,$result)
+    public function DeepFirstSearchBackPracticeTable(&$str,$result,$con)
     {
         $version = new HelpController;
         $current = '2017-2018-1';
         $TableName = $version->GetCurrentTableName($current);
 
-        $con=mysqli_connect("localhost","root","","tets");
+//        $con=mysqli_connect("localhost","root","","tets");
         mysqli_query($con,'set names utf8');
 
         for($i=0;$i<count($result);$i++)
         {
             $str .=$result[$i]->text .' varchar(255),';
             $newresult=DB::table('back_contents'.$TableName)->where('fid','=',$result[$i]->id)->get();
-            $this->DeepFirstSearchBackPracticeTable($str,$newresult);
+            $this->DeepFirstSearchBackPracticeTable($str,$newresult,$con);
         }
     }
 
@@ -395,20 +395,20 @@ class HomeController extends Controller
             $this->DeepFirstSearchFrontPhysicalTable($str,$newresult);
         }
     }
-    public function DeepFirstSearchBackPhysicalTable(&$str,$result)
+    public function DeepFirstSearchBackPhysicalTable(&$str,$result,$con)
     {
         $version = new HelpController;
         $current = '2017-2018-1';
         $TableName = $version->GetCurrentTableName($current);
 
-        $con=mysqli_connect("localhost","root","","tets");
-        mysqli_query($con,'set names utf8');
+//        $con=mysqli_connect("localhost","root","","tets");
+//        mysqli_query($con,'set names utf8');
 
         for($i=0;$i<count($result);$i++)
         {
             $str .=$result[$i]->text .' varchar(255),';
             $newresult=DB::table('back_contents'.$TableName)->where('fid','=',$result[$i]->id)->get();
-            $this->DeepFirstSearchBackPhysicalTable($str,$newresult);
+            $this->DeepFirstSearchBackPhysicalTable($str,$newresult,$con);
         }
     }
     public function TheoryEvaluationEdit(Request $request)
@@ -509,11 +509,11 @@ class HomeController extends Controller
     }
     public function CreateBackTheoryEvalTable(Request $request)
     {
-        //更新表evaluation_migration
         $year = $request->year;
         $semester = $request->semester;
         $current = $year.'-'.$semester;
         $version = new HelpController;
+        $current = '2017-2018-1';
         $TableName = $version->GetCurrentTableName($current);
 
         $time = date("Y_m"); //时间戳
@@ -535,11 +535,11 @@ class HomeController extends Controller
         $result=DB::table('back_contents'.$TableName)->where('text','=',"理论课评价表")->get();
         $id=$result[0]->id;
         $result=DB::table('back_contents'.$TableName)->where('fid','=',$id)->get();
-        $this->DeepFirstSearchBackTheoryTable($str,$result);
+        $this->DeepFirstSearchBackTheoryTable($str,$result,$con);
         $str=trim($str,',');
         if(mysqli_num_rows(mysqli_query($con,"show tables like '"."back_theory_evaluation$TableName"."'"))==1)
             mysqli_query($con, "drop table back_theory_evaluation$TableName;");
-//        Log::info("create table back_theory_evaluation$TableName ($str)engine = InnoDB COLLATE=utf8_bin;");
+        Log::info("create table back_theory_evaluation$TableName ($str)engine = InnoDB COLLATE=utf8_bin;");
         mysqli_query($con,"create table back_theory_evaluation$TableName ($str)engine = InnoDB COLLATE=utf8_bin;");
     }
 
@@ -608,11 +608,11 @@ class HomeController extends Controller
         $result=DB::table('back_contents'.$TableName)->where('text','=',"实践课评价表")->get();
         $id=$result[0]->id;
         $result=DB::table('back_contents'.$TableName)->where('fid','=',$id)->get();
-        $this->DeepFirstSearchBackPracticeTable($str,$result);
+        $this->DeepFirstSearchBackPracticeTable($str,$result,$con);
         $str=trim($str,',');
         if(mysqli_num_rows(mysqli_query($con,"show tables like '"."back_practice_evaluation$TableName"."'"))==1)
             mysqli_query($con, "drop table back_practice_evaluation$TableName;");
-        log::info("create table back_practice_evaluation$TableName ($str)engine = InnoDB COLLATE=utf8_bin;");
+        Log::info("create table back_practice_evaluation$TableName ($str)engine = InnoDB COLLATE=utf8_bin;");
         mysqli_query($con,"create table back_practice_evaluation$TableName ($str)engine = InnoDB COLLATE=utf8_bin;");
     }
 
@@ -681,7 +681,7 @@ class HomeController extends Controller
         $result=DB::table('back_contents'.$TableName)->where('text','=',"体育课评价表")->get();
         $id=$result[0]->id;
         $result=DB::table('back_contents'.$TableName)->where('fid','=',$id)->get();
-        $this->DeepFirstSearchBackPhysicalTable($str,$result);
+        $this->DeepFirstSearchBackPhysicalTable($str,$result,$con);
         $str=trim($str,',');
         if(mysqli_num_rows(mysqli_query($con,"show tables like '"."back_physical_evaluation$TableName"."'"))==1)
             mysqli_query($con, "drop table back_physical_evaluation$TableName;");

@@ -17,7 +17,7 @@ class User extends Authenticatable
         'user_id','sex','name','starttime',
         'endtime','email','phone','state',
         'unit','status','group','workstate',
-        'prorank','skill'
+        'prorank','skill','password'
     ];
 
     /**

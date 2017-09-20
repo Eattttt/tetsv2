@@ -36,20 +36,59 @@ $(document).ready(function(){
                     index_name_teaching = [];
                     index_value_teaching = [];
 
-                    for (var i = 0;i<result.ChartTeaching.length;i++)
-                    {
-                        index_name_teaching.push(result.ChartTeaching[i]['level'])
-                        index_value_teaching.push(result.ChartTeaching[i]['num'])
+                    for (var j = 0;j<result.ChartTeaching.length;j++) {
+                        for (var i = 0; i < result.ChartTeaching.length; i++) {
+                            console.log(result.ChartTeaching[i]['level']);
+                            if (result.ChartTeaching[i]['level'] == "明显不足" && index_name_teaching.length == 0) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "不足" && index_name_teaching.length == 1) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "正常" && index_name_teaching.length == 2) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "满意" && index_name_teaching.length == 3) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "非常满意" && index_name_teaching.length == 4) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                        }
                     }
 
                     //理论课听课总体评价
                     index_name_learning = [];
                     index_value_learning = [];
 
-                    for (var i = 0;i<result.ChartLearning.length;i++)
-                    {
-                        index_name_learning.push(result.ChartLearning[i]['level'])
-                        index_value_learning.push(result.ChartLearning[i]['num'])
+                    for (var j = 0;j<result.ChartLearning.length;j++) {
+                        for (var i = 0;i<result.ChartLearning.length;i++) {
+                            if (result.ChartLearning[i]['level'] == "明显不足" && index_name_learning.length == 0) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "不足" && index_name_learning.length == 1) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "正常" && index_name_learning.length == 2) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "满意" && index_name_learning.length == 3) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "非常满意" && index_name_learning.length == 4) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                        }
                     }
 
                     //评价项目（细项）得分情况---按评价数量排
@@ -115,20 +154,59 @@ $(document).ready(function(){
                     index_name_teaching = [];
                     index_value_teaching = [];
 
-                    for (var i = 0;i<result.ChartTeaching.length;i++)
-                    {
-                        index_name_teaching.push(result.ChartTeaching[i]['level'])
-                        index_value_teaching.push(result.ChartTeaching[i]['num'])
+                    for (var j = 0;j<result.ChartTeaching.length;j++) {
+                        for (var i = 0; i < result.ChartTeaching.length; i++) {
+                            console.log(result.ChartTeaching[i]['level']);
+                            if (result.ChartTeaching[i]['level'] == "明显不足" && index_name_teaching.length == 0) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "不足" && index_name_teaching.length == 1) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "正常" && index_name_teaching.length == 2) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "满意" && index_name_teaching.length == 3) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "非常满意" && index_name_teaching.length == 4) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                        }
                     }
 
                     //理论课听课总体评价
                     index_name_learning = [];
                     index_value_learning = [];
 
-                    for (var i = 0;i<result.ChartLearning.length;i++)
-                    {
-                        index_name_learning.push(result.ChartLearning[i]['level'])
-                        index_value_learning.push(result.ChartLearning[i]['num'])
+                    for (var j = 0;j<result.ChartLearning.length;j++) {
+                        for (var i = 0;i<result.ChartLearning.length;i++) {
+                            if (result.ChartLearning[i]['level'] == "明显不足" && index_name_learning.length == 0) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "不足" && index_name_learning.length == 1) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "正常" && index_name_learning.length == 2) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "满意" && index_name_learning.length == 3) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "非常满意" && index_name_learning.length == 4) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                        }
                     }
 
                     //评价项目（细项）得分情况---按评价数量排
@@ -193,20 +271,59 @@ $(document).ready(function(){
                 index_name_teaching = [];
                 index_value_teaching = [];
 
-                for (var i = 0;i<result.ChartTeaching.length;i++)
-                {
-                    index_name_teaching.push(result.ChartTeaching[i]['level'])
-                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                for (var j = 0;j<result.ChartTeaching.length;j++) {
+                    for (var i = 0; i < result.ChartTeaching.length; i++) {
+                        console.log(result.ChartTeaching[i]['level']);
+                        if (result.ChartTeaching[i]['level'] == "明显不足" && index_name_teaching.length == 0) {
+                            index_name_teaching.push(result.ChartTeaching[i]['level']);
+                            index_value_teaching.push(result.ChartTeaching[i]['num'])
+                        }
+                        else if (result.ChartTeaching[i]['level'] == "不足" && index_name_teaching.length == 1) {
+                            index_name_teaching.push(result.ChartTeaching[i]['level']);
+                            index_value_teaching.push(result.ChartTeaching[i]['num'])
+                        }
+                        else if (result.ChartTeaching[i]['level'] == "正常" && index_name_teaching.length == 2) {
+                            index_name_teaching.push(result.ChartTeaching[i]['level']);
+                            index_value_teaching.push(result.ChartTeaching[i]['num'])
+                        }
+                        else if (result.ChartTeaching[i]['level'] == "满意" && index_name_teaching.length == 3) {
+                            index_name_teaching.push(result.ChartTeaching[i]['level']);
+                            index_value_teaching.push(result.ChartTeaching[i]['num'])
+                        }
+                        else if (result.ChartTeaching[i]['level'] == "非常满意" && index_name_teaching.length == 4) {
+                            index_name_teaching.push(result.ChartTeaching[i]['level']);
+                            index_value_teaching.push(result.ChartTeaching[i]['num'])
+                        }
+                    }
                 }
 
                 //理论课听课总体评价
                 index_name_learning = [];
                 index_value_learning = [];
 
-                for (var i = 0;i<result.ChartLearning.length;i++)
-                {
-                    index_name_learning.push(result.ChartLearning[i]['level'])
-                    index_value_learning.push(result.ChartLearning[i]['num'])
+                for (var j = 0;j<result.ChartLearning.length;j++) {
+                    for (var i = 0;i<result.ChartLearning.length;i++) {
+                        if (result.ChartLearning[i]['level'] == "明显不足" && index_name_learning.length == 0) {
+                            index_name_learning.push(result.ChartLearning[i]['level']);
+                            index_value_learning.push(result.ChartLearning[i]['num'])
+                        }
+                        else if (result.ChartLearning[i]['level'] == "不足" && index_name_learning.length == 1) {
+                            index_name_learning.push(result.ChartLearning[i]['level']);
+                            index_value_learning.push(result.ChartLearning[i]['num'])
+                        }
+                        else if (result.ChartLearning[i]['level'] == "正常" && index_name_learning.length == 2) {
+                            index_name_learning.push(result.ChartLearning[i]['level']);
+                            index_value_learning.push(result.ChartLearning[i]['num'])
+                        }
+                        else if (result.ChartLearning[i]['level'] == "满意" && index_name_learning.length == 3) {
+                            index_name_learning.push(result.ChartLearning[i]['level']);
+                            index_value_learning.push(result.ChartLearning[i]['num'])
+                        }
+                        else if (result.ChartLearning[i]['level'] == "非常满意" && index_name_learning.length == 4) {
+                            index_name_learning.push(result.ChartLearning[i]['level']);
+                            index_value_learning.push(result.ChartLearning[i]['num'])
+                        }
+                    }
                 }
 
                 //评价项目（细项）得分情况---按评价数量排
@@ -253,7 +370,7 @@ $(document).ready(function(){
     }
 
     $('#search').on('click',function(){
-        checkNumber();
+        checkNumber()
 
         if (level != '校级' && level != '大组长')
         {
@@ -279,20 +396,59 @@ $(document).ready(function(){
                         index_name_teaching = [];
                         index_value_teaching = [];
 
-                        for (var i = 0;i<result.ChartTeaching.length;i++)
-                        {
-                            index_name_teaching.push(result.ChartTeaching[i]['level'])
-                            index_value_teaching.push(result.ChartTeaching[i]['num'])
+                        for (var j = 0;j<result.ChartTeaching.length;j++) {
+                            for (var i = 0; i < result.ChartTeaching.length; i++) {
+                                console.log(result.ChartTeaching[i]['level']);
+                                if (result.ChartTeaching[i]['level'] == "明显不足" && index_name_teaching.length == 4) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "不足" && index_name_teaching.length == 3) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "正常" && index_name_teaching.length == 2) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "满意" && index_name_teaching.length == 1) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "非常满意" && index_name_teaching.length == 0) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                            }
                         }
 
                         //理论课听课总体评价
                         index_name_learning = [];
                         index_value_learning = [];
 
-                        for (var i = 0;i<result.ChartLearning.length;i++)
-                        {
-                            index_name_learning.push(result.ChartLearning[i]['level'])
-                            index_value_learning.push(result.ChartLearning[i]['num'])
+                        for (var j = 0;j<result.ChartLearning.length;j++) {
+                            for (var i = 0;i<result.ChartLearning.length;i++) {
+                                if (result.ChartLearning[i]['level'] == "明显不足" && index_name_learning.length == 4) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "不足" && index_name_learning.length == 3) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "正常" && index_name_learning.length == 2) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "满意" && index_name_learning.length == 1) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "非常满意" && index_name_learning.length == 0) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                            }
                         }
 
                         //评价项目（细项）得分情况---按评价数量排
@@ -359,20 +515,58 @@ $(document).ready(function(){
                         index_name_teaching = [];
                         index_value_teaching = [];
 
-                        for (var i = 0;i<result.ChartTeaching.length;i++)
-                        {
-                            index_name_teaching.push(result.ChartTeaching[i]['level'])
-                            index_value_teaching.push(result.ChartTeaching[i]['num'])
+                        for (var j = 0;j<result.ChartTeaching.length;j++) {
+                            for (var i = 0; i < result.ChartTeaching.length; i++) {
+                                console.log(result.ChartTeaching[i]['level']);
+                                if (result.ChartTeaching[i]['level'] == "明显不足" && index_name_teaching.length == 4) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "不足" && index_name_teaching.length == 3) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "正常" && index_name_teaching.length == 2) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "满意" && index_name_teaching.length == 1) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                                else if (result.ChartTeaching[i]['level'] == "非常满意" && index_name_teaching.length == 0) {
+                                    index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                    index_value_teaching.push(result.ChartTeaching[i]['num'])
+                                }
+                            }
                         }
-
                         //理论课听课总体评价
                         index_name_learning = [];
                         index_value_learning = [];
 
-                        for (var i = 0;i<result.ChartLearning.length;i++)
-                        {
-                            index_name_learning.push(result.ChartLearning[i]['level'])
-                            index_value_learning.push(result.ChartLearning[i]['num'])
+                        for (var j = 0;j<result.ChartLearning.length;j++) {
+                            for (var i = 0;i<result.ChartLearning.length;i++) {
+                                if (result.ChartLearning[i]['level'] == "明显不足" && index_name_learning.length == 4) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "不足" && index_name_learning.length == 3) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "正常" && index_name_learning.length == 2) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "满意" && index_name_learning.length == 1) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                                else if (result.ChartLearning[i]['level'] == "非常满意" && index_name_learning.length == 0) {
+                                    index_name_learning.push(result.ChartLearning[i]['level']);
+                                    index_value_learning.push(result.ChartLearning[i]['num'])
+                                }
+                            }
                         }
 
                         //评价项目（细项）得分情况---按评价数量排
@@ -418,6 +612,7 @@ $(document).ready(function(){
             }
         }
         else {
+
             $.ajax({
                 type: "get",
                 async: false,
@@ -437,21 +632,59 @@ $(document).ready(function(){
                     index_name_teaching = [];
                     index_value_teaching = [];
 
-                    for (var i = 0;i<result.ChartTeaching.length;i++)
-                    {
-                        index_name_teaching.push(result.ChartTeaching[i]['level'])
-                        index_value_teaching.push(result.ChartTeaching[i]['num'])
-
+                    for (var j = 0;j<result.ChartTeaching.length;j++) {
+                        for (var i = 0; i < result.ChartTeaching.length; i++) {
+                            console.log(result.ChartTeaching[i]['level']);
+                            if (result.ChartTeaching[i]['level'] == "明显不足" && index_name_teaching.length == 4) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "不足" && index_name_teaching.length == 3) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "正常" && index_name_teaching.length == 2) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "满意" && index_name_teaching.length == 1) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                            else if (result.ChartTeaching[i]['level'] == "非常满意" && index_name_teaching.length == 0) {
+                                index_name_teaching.push(result.ChartTeaching[i]['level']);
+                                index_value_teaching.push(result.ChartTeaching[i]['num'])
+                            }
+                        }
                     }
 
                     //理论课听课总体评价
                     index_name_learning = [];
                     index_value_learning = [];
 
-                    for (var i = 0;i<result.ChartLearning.length;i++)
-                    {
-                        index_name_learning.push(result.ChartLearning[i]['level'])
-                        index_value_learning.push(result.ChartLearning[i]['num'])
+                    for (var j = 0;j<result.ChartLearning.length;j++) {
+                        for (var i = 0;i<result.ChartLearning.length;i++) {
+                            if (result.ChartLearning[i]['level'] == "明显不足" && index_name_learning.length == 4) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "不足" && index_name_learning.length == 3) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "正常" && index_name_learning.length == 2) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "满意" && index_name_learning.length == 1) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                            else if (result.ChartLearning[i]['level'] == "非常满意" && index_name_learning.length == 0) {
+                                index_name_learning.push(result.ChartLearning[i]['level']);
+                                index_value_learning.push(result.ChartLearning[i]['num'])
+                            }
+                        }
                     }
 
                     //评价项目（细项）得分情况---按评价数量排
@@ -464,11 +697,12 @@ $(document).ready(function(){
 
                     }
 
-                    value_Satisfactory = result.ChartMinorByCount['满意'];
                     value_VerySatisfactory = result.ChartMinorByCount['非常满意'];
+                    value_Satisfactory = result.ChartMinorByCount['满意'];
+                    value_Normal= result.ChartMinorByCount['正常'];
                     value_Deficient = result.ChartMinorByCount['不足'];
                     value_ObviouslyDeficient= result.ChartMinorByCount['明显不足'];
-                    value_Normal= result.ChartMinorByCount['正常'];
+
 
                     //评价项目（细项）得分情况---按平均分排
                     index_name_MinorByAVG = [];
@@ -499,7 +733,7 @@ $(document).ready(function(){
 
 
     })
-})
+});
 
 
 //理论课授课总体评价
@@ -508,6 +742,14 @@ function BarChartTeachingOverallEvaluation (){
     var myChart = echarts.init(document.getElementById('TChartOne'));
     // 指定图表的配置项和数据
     var option = {
+        toolbox: {
+            // y: 'bottom',
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b}:\n{c}%'
@@ -555,6 +797,14 @@ function BarChartLearningOverallEvaluation (){
     var myChart = echarts.init(document.getElementById('TChartTwo'));
     // 指定图表的配置项和数据
     var option = {
+        toolbox: {
+            // y: 'bottom',
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b}:\n{c}%'
@@ -569,7 +819,6 @@ function BarChartLearningOverallEvaluation (){
 
         xAxis: {
             data: index_name_learning,
-
         },
 
         yAxis: {
@@ -604,6 +853,14 @@ function BarChartMajorTermEvaluation(){
     var myChart = echarts.init(document.getElementById('TChartThree'));
     // 指定图表的配置项和数据
     var option = {
+        toolbox: {
+            // y: 'bottom',
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         tooltip: {},
         grid: {
             left: '3%',
@@ -642,6 +899,14 @@ function BarChartMinorTermEvaluationByAVG(){
     var myChart = echarts.init(document.getElementById('TChartFive'));
     // 指定图表的配置项和数据
     var option = {
+        toolbox: {
+            // y: 'bottom',
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         tooltip: {},
         grid: {
             left: '3%',
@@ -687,7 +952,14 @@ function BarCharMinorTermEvaluationByCount(){
     var myChart = echarts.init(document.getElementById('TChartSix'));
     // 指定图表的配置项和数据
     var option = {
-
+        toolbox: {
+            // y: 'bottom',
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         tooltip : {},
         grid: {
 
@@ -771,7 +1043,7 @@ function BarCharMinorTermEvaluationByCount(){
                 },
                 data:value_ObviouslyDeficient
 
-            },
+            }
         ]
     };
     myChart.setOption(option);

@@ -298,7 +298,7 @@
                         <div class="widget-box-green">
                             <div class="widget-header header-color-green">
                                 @if(session('role')=='校级'||session('role')=='大组长')
-                                    <h5 class="bigger lighter">理论课授课总体评价</h5>
+                                    <h5 class="bigger lighter">体育课授课总体评价</h5>
                                 @elseif(session('role')=='院级')
                                     <input  id="name" type="text" value="{{Auth::User()->unit}}" style="display: none">
                                     <h5 class="bigger lighter">{{Auth::User()->unit}}课授课总体评价</h5>

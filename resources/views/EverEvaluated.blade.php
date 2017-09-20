@@ -913,134 +913,6 @@
 
                     });
 
-                    //移除标签中的类
-                    //移除标签中的类
-//                    $('li').removeClass("current");
-//                    $('input[type=checkbox]').prop('checked',false);
-//                    for(i=0;i<$($('#front').children()[0]).children().length;i++)
-//                    {
-//                        var textlevel1=$($($($('#front').children()[0]).children()[i]).children()[0]).children()[1].innerText;
-//                        for(var j=2;j<$($($($('#front').children()[0]).children()[i]).children()[0]).children().length;j++)
-//                        {
-//                            var cssstyle=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
-//                            if(cssstyle=="grade2")
-//                            {
-//                                var textlevel2=$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
-//                                if(textlevel2.indexOf("总体评价")>=0)
-//                                {
-//                                    textlevel2=$.trim(textlevel2);
-//                                    for(var p=0;p<$($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
-//                                        if($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel2])
-//                                        {
-//                                            console.log($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()))
-//                                            $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
-//                                            break;
-//                                        }
-//                                    continue;
-//                                }
-//                                for(var k=2;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-//                                {
-//                                    var textlevel3=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
-//                                    textlevel3=$.trim(textlevel3);
-//                                    for(var p=0;p<$($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
-//                                        if($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[1][0][textlevel3])
-//                                        {
-//                                            $($($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
-//                                            break;
-//                                        }
-//                                }
-//                            }
-//                            if(cssstyle=="radiograde")
-//                            {
-//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-//                                {
-//                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-//                                    choosecontent=$.trim(choosecontent);
-//                                    if(result[1][0][choosecontent]==1)
-//                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
-//                                }
-//                            }
-//                            if(cssstyle=="checkboxgrade")
-//                            {
-//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-//                                {
-//                                    var choosecontent=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-//                                    choosecontent=$.trim(choosecontent);
-//                                    if(result[1][0][choosecontent]==1)
-//                                        $($($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
-//                                }
-//                            }
-//                            if(cssstyle=="textareagrade")
-//                            {
-//                                for(var k=0;k<$($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().length;k++)
-//                                {
-//                                    var text=$($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[0].innerText;
-//                                    text=$.trim(text);
-//                                    $($($($($($($('#front').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[k]).children()[1]).children().val(result[1][0][text]);
-//                                }
-//                            }
-//                        }
-//                    }
-//                    for(i=0;i<$($('#back').children()[0]).children().length;i++)
-//                    {
-//                        var textlevel1=$($($($('#back').children()[0]).children()[i]).children()[0]).children()[1].innerText;
-//                        for(var j=2;j<$($($($('#back').children()[0]).children()[i]).children()[0]).children().length;j++)
-//                        {
-//                            var cssstyle=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).attr("class");
-//                            if(cssstyle=="grade2")
-//                            {
-//                                var textlevel2=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[1].innerText;
-//                                if(textlevel2.indexOf("总体评价")>=0)
-//                                {
-//                                    textlevel2=$.trim(textlevel2);
-//                                    for(var p=0;p<$($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children().length;p++)
-//                                        if($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel2])
-//                                        {
-//                                            $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children()[1]).children()[0]).children()[p]).addClass("current");
-//                                            break;
-//                                        }
-//                                    continue;
-//                                }
-//                                for(var k=2;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-//                                {
-//                                    var textlevel3=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children().children()[0].innerText;
-//                                    textlevel3=$.trim(textlevel3);
-//                                    for(var p=0;p<$($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children().length;p++)
-//                                        if($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p].innerText==result[2][0][textlevel3])
-//                                        {
-//                                            $($($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[1]).children()[0]).children()[p]).addClass("current");
-//                                            break;
-//                                        }
-//                                }
-//                            }
-//                            if(cssstyle=="radiograde")
-//                            {
-//                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-//                                {
-//                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-//                                    choosecontent=$.trim(choosecontent);
-//                                    if(result[2][0][choosecontent]==1)
-//                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true)
-//                                }
-//                            }
-//                            if(cssstyle=="checkboxgrade")
-//                            {
-//                                for(var k=0;k<$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().length;k++)
-//                                {
-//                                    var choosecontent=$($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0].innerText;
-//                                    choosecontent=$.trim(choosecontent);
-//                                    if(result[2][0][choosecontent]==1)
-//                                        $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children()[k]).children()[0]).children()[0]).prop("checked",true);
-//                                }
-//                            }
-//                            if(cssstyle=="textareagrade")
-//                            {
-//                                var text=$($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children().context.innerText;
-//                                text=$.trim(text);
-//                                $($($($($($($($('#back').children()[0]).children()[i]).children()[0]).children()[j]).children().children().children()[0]).children()[1]).children()[0]).val(result[2][0][text]);
-//                            }
-//                        }
-//                    }
 
                     if ($('#getid').val() == LessonSupervisor)
                     {
@@ -1231,24 +1103,35 @@
                     var BackOne =[];
                     var BackTwo =[];
                     var BackThree =[];
+                    //删除评价表背面没有选择的东西
                     for (i=headnum;i<result[4].length;i++)
                     {
                         a='COLUMN_NAME';
-                        $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
-                                '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
-                        //$('#back').append(result[4][i][a]+'<br>');
                         if ( result[4][i][a].match(/\？/) != null )
                         {
                             BackOne.push(result[4][i][a]);
+                            $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                    '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
                         }
-                        else if(result[4][i][a].match(/\。/) != null){
+                        else if(result[4][i][a].match("评述1") != null||result[4][i][a].match("评述2") != null||result[4][i][a].match("评述3") != null){
                             BackTwo.push(result[4][i][a]);
+                            $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                    '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                        }
+                        else if(result[4][i][a].match(1) != null||result[4][i][a].match(2) != null||result[4][i][a].match(3) != null){
+//                            $('#back').append('<div class="question">'+'<span><strong>·'+result[4][i][a]+'</strong></span>'+'</div>');
                         }
                         else{
-                            BackThree.push(result[4][i][a]);
+                            if(result[2]["0"][result[4][i][a]]=="1")
+                            {
+                                BackThree.push(result[4][i][a]);
+                                $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                        '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                            }
                         }
 
                     }
+
                     $('.question').each(function () {
                         for(var i=0;i<BackOne.length;i++)
                         {
@@ -1421,6 +1304,38 @@
             });
             $('span:contains("评价状态")').css('display','none');
             $('span:contains("评价状态")').prev().css('display','none');
+            //隐藏正面为NULL值和0的选项和把1变成钩
+            for (var x=0;x<$('li.current').length;x++)
+            {
+                if($($('li.current')[x])["context"].innerText == "null" || $($('li.current')[x])["context"].innerText == "0" || $($('li.current')[x])["context"].innerText == "")
+                {
+                    $($($('li.current')[x]).parents('.line-1.front3')).css('display','none');
+                }
+            }
+            $.ajax({
+                type: "get",
+                async: false,
+                url: "/EvaluationCheckBox",
+                data: {
+                    year1:$("#year1").val(),
+                    year2:$("#year2").val(),
+                    semester:$("#terminal").val().match(/\d/g)
+                },
+                success: function (result) {
+//                    console.log(result.back);
+                    for (var x=0;x<$('.line-1.front3 .lineName').length;x++)
+                    {
+                        for(var key in result.front)
+                        {
+                            if($($('.line-1.front3 .lineName')[x])["0"].innerText == result.front[key].text)
+                            {
+                                $($('.line-1.front3 .lineName')[x]).next().find('li')["0"].innerHTML ="√";
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         },
         'click .remove': function (e, value, row, index){//重置
             $('#resetModel').click();

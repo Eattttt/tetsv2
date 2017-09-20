@@ -646,21 +646,31 @@
                     var BackOne =[];
                     var BackTwo =[];
                     var BackThree =[];
+                    //删除评价表背面没有选择的东西
                     for (i=headnum;i<result[4].length;i++)
                     {
                         a='COLUMN_NAME';
-                        $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
-                                '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
-                        //$('#back').append(result[4][i][a]+'<br>');
                         if ( result[4][i][a].match(/\？/) != null )
                         {
                             BackOne.push(result[4][i][a]);
+                            $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                    '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
                         }
-                        else if(result[4][i][a].match(/\。/) != null){
+                        else if(result[4][i][a].match("评述1") != null||result[4][i][a].match("评述2") != null||result[4][i][a].match("评述3") != null){
                             BackTwo.push(result[4][i][a]);
+                            $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                    '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                        }
+                        else if(result[4][i][a].match(1) != null||result[4][i][a].match(2) != null||result[4][i][a].match(3) != null){
+//                            $('#back').append('<div class="question">'+'<span><strong>·'+result[4][i][a]+'</strong></span>'+'</div>');
                         }
                         else{
-                            BackThree.push(result[4][i][a]);
+                            if(result[2]["0"][result[4][i][a]]=="1")
+                            {
+                                BackThree.push(result[4][i][a]);
+                                $('#back').append('<div class="question">'+'<div class="icon-check">'+'</div>'+'<span>'+result[4][i][a]+'</span>'+
+                                        '<div class="questionData">'+result[2][0][result[4][i][a]]+'</div>'+'</div>');
+                            }
                         }
 
                     }
@@ -833,9 +843,10 @@
             });
             $('span:contains("评价状态")').css('display','none');
             $('span:contains("评价状态")').prev().css('display','none');
+            //隐藏正面为NULL值和0的选项和把1变成钩
             for (var x=0;x<$('li.current').length;x++)
             {
-                if($($('li.current')[x])["context"].innerText == "null")
+                if($($('li.current')[x])["context"].innerText == "null" || $($('li.current')[x])["context"].innerText == "0" || $($('li.current')[x])["context"].innerText == "")
                 {
                     $($($('li.current')[x]).parents('.line-1.front3')).css('display','none');
                 }
@@ -862,16 +873,6 @@
                             }
                         }
                     }
-                    var long=$('#back .question span').length;
-                    for (var x=0;x<long;x++)
-                    {
-                        if($('#back .question span')[x].innerText.indexOf("1")>=0 || $('#back .question span')[x].innerText.indexOf("2")>=0 || $('#back .question span')[x].innerText.indexOf("3")>=0 )
-                        {
-                            $ChangeText=$('#back .question span')[x].innerText;
-                            $('#back .question')[x].innerHTML = "<h5><span><strong>·" + $ChangeText +"</strong></span></h5>";
-                        }
-                    }
-
                 }
             });
         }

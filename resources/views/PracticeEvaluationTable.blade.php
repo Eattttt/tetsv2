@@ -543,7 +543,7 @@
                                         }?>
                                     </div>
                                 </div>
-                                <button class="btn btn-success btn-raised tabBack" style="float: right;display: block;margin-top: 10px;" >评价表背面（选填）</button>
+                                <a class="btn btn-success btn-raised tabBack" style="float: right;display: block;margin-top: 10px;" href="#myTab">评价表背面（选填）</a>
                                 <button class="btn btn-success btn-raised tabFront" style="float: right; display: none;"  >评价表正面</button>
                             </div>
                             <button class="btn btn-success btn-raised submitTable" style="float: right;margin-top: 46px;margin-left:8px;display: none" >提交评价表</button>
